@@ -9,6 +9,7 @@ import Register from "./pages/Register.jsx";
 import NavBar from "./components/NavBar.jsx";
 import {Profile as EmployeeProfile} from "./pages/employee/Profile.jsx";
 import EditJob from "./pages/employer/EditJob.jsx";
+import {Container} from "react-bootstrap";
 // import {Profile as EmployerProfile} from "./pages/employee/Profile.jsx";
 const router = createBrowserRouter([
     {
@@ -36,6 +37,8 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
       <NavBar />
-      <RouterProvider router={router} />
+      <Container>
+          <RouterProvider router={router} />
+      </Container>
   </React.StrictMode>,
 )
