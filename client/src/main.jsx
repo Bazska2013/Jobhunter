@@ -10,7 +10,8 @@ import NavBar from "./components/NavBar.jsx";
 import {Profile as EmployeeProfile} from "./pages/employee/Profile.jsx";
 import EditJob from "./pages/employer/EditJob.jsx";
 import {Container} from "react-bootstrap";
-// import {Profile as EmployerProfile} from "./pages/employee/Profile.jsx";
+import {Profile as EmployerProfile} from "./pages/employer/Profile.jsx";
+import JobListing from "./pages/JobListing.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -26,11 +27,19 @@ const router = createBrowserRouter([
     },
     {
         path: "/profile",
-        element: <EmployeeProfile />
+        element: <EmployerProfile />
     },
     {
         path: "/editjob",
         element: <EditJob />
+    },
+    {
+        path: "/newjob",
+        element: <EditJob />
+    },
+    {
+        path: "/job",
+        element: <JobListing />
     }
 ])
 
