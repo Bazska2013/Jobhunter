@@ -1,12 +1,14 @@
 import {Button, Form} from "react-bootstrap";
-import {useState} from "react";
+import React, {useState} from "react";
 import Experiences from "../components/Experiences.jsx";
+import NavBar from "../components/NavBar.jsx";
 
 const Register = () => {
     const [userType, setUserType] = useState(false);
 
     return (
         <>
+            <NavBar />
             <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email cím</Form.Label>

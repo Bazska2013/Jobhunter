@@ -1,11 +1,15 @@
 import {Col, Container, InputGroup, Row, Form, Button, Table, Offcanvas} from "react-bootstrap";
-import {useState} from "react";
+import React, {useState} from "react";
+import {useSelector} from "react-redux";
+import NavBar from "../components/NavBar.jsx";
 
 const Home = () => {
+    const authorized = useSelector((state) => state.authorized.value);
     const [show, setShow] = useState(false);
 
     return (
         <>
+            <NavBar />
             <Offcanvas show={show} onHide={() => {setShow(false)}} placement="end" >
                 <Offcanvas.Header closeButton >
                     <Offcanvas.Title>Szűrés</Offcanvas.Title>
@@ -47,7 +51,7 @@ const Home = () => {
                     </Col>
                     <Col>
                         <Button variant="primary">Keresés</Button>
-                        <Button variant="light" onClick={() => {setShow(true)}}>Szűrés</Button>
+                        {authorized && <Button variant="light" onClick={() => {setShow(true)}}>Szűrés</Button>}
                     </Col>
                 </Row>
             </Container>

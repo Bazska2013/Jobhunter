@@ -1,8 +1,11 @@
 import {Form, InputGroup} from "react-bootstrap";
+import NavBar from "../../components/NavBar.jsx";
+import React from "react";
 
 const EditJob = () => {
     return (
         <div>
+            <NavBar />
             <Form>
                 <Form.Group className="mb-3">
                     <Form.Label>Cég neve</Form.Label>

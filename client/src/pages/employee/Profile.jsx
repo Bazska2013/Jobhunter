@@ -1,9 +1,11 @@
 import React from 'react';
 import {Button, Col, Container, Row, Table} from "react-bootstrap";
+import NavBar from "../../components/NavBar.jsx";
 
 export const Profile = () => {
     return (
         <div>
+            <NavBar />
             <h1>Profilom</h1>
             <Container>
                 <Row>

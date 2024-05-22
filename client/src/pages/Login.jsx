@@ -1,9 +1,24 @@
 import {Button, Form} from "react-bootstrap";
+import {useDispatch} from "react-redux";
+import { useNavigate } from 'react-router-dom';
+import {login} from "../features/auth/authorizedSlice.js";
+import NavBar from "../components/NavBar.jsx";
+import React from "react";
 
 const Login = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        dispatch(login());
+        navigate('/');
+    }
+
     return (
         <>
-            <Form>
+            <NavBar />
+            <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email cím</Form.Label>
                     <Form.Control type="email" placeholder="Írd be az email címed" />

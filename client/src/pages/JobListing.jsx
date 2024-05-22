@@ -1,8 +1,11 @@
 import {Button, Col, Container, Row, Table} from "react-bootstrap";
+import NavBar from "../components/NavBar.jsx";
+import React from "react";
 
 const JobListing = () => {
     return (
         <>
+            <NavBar />
             <Container>
                 <h1>Halo Haven Kft.</h1>
                 <p>Home Office</p>

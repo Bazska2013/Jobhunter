@@ -12,6 +12,8 @@ import EditJob from "./pages/employer/EditJob.jsx";
 import {Container} from "react-bootstrap";
 import {Profile as EmployerProfile} from "./pages/employer/Profile.jsx";
 import JobListing from "./pages/JobListing.jsx";
+import {Provider} from "react-redux";
+import store from "./store";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -41,13 +43,14 @@ const router = createBrowserRouter([
         path: "/job",
         element: <JobListing />
     }
-])
+]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-      <NavBar />
-      <Container>
-          <RouterProvider router={router} />
-      </Container>
+      <Provider store={store}>
+          <Container>
+              <RouterProvider router={router} />
+          </Container>
+      </Provider>
   </React.StrictMode>,
 )
