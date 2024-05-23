@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import {login} from "../features/auth/authorizedSlice.js";
 import NavBar from "../components/NavBar.jsx";
 import React from "react";
+import {show} from "../features/auth/loginModalSlice.js";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const Login = () => {
         event.preventDefault();
         dispatch(login());
         navigate('/');
+        dispatch(show());
     }
 
     return (
