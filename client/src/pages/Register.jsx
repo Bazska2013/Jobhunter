@@ -4,17 +4,34 @@ import Experiences from "../components/Experiences.jsx";
 import NavBar from "../components/NavBar.jsx";
 import {login} from "../features/auth/authorizedSlice.js";
 import {show} from "../features/auth/loginModalSlice.js";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+    email: yup.string().email().required(),
+    password: yup.string().min(8).required(),
+    fullname: yup.string().required(),
+    role: yup.string().oneOf(['company', 'employee']).required(),
+});
 
 const Register = () => {
     const [userType, setUserType] = useState(false);
+
+    const { email, password, fullname, role } = useSelector(state => state.register);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        const user = { email, password, fullname, role };
+        try {
+            schema.validate(user);
+            dispatch(register(user));
+        } catch (error) {
+            console.error(error);
+        }
         dispatch(login());
         navigate('/');
         dispatch(show());
