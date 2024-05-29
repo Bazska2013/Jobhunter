@@ -1,4 +1,4 @@
-import {Button, Form} from "react-bootstrap";
+import {Button, Form, Modal} from "react-bootstrap";
 import React, {useState} from "react";
 import Experiences from "../components/Experiences.jsx";
 import NavBar from "../components/NavBar.jsx";
@@ -8,6 +8,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import * as yup from "yup";
 import * as formik from "formik";
+import {getError, sendData, setEmail, setName, setPassword, setRole} from "../features/auth/registerSlice.js";
+import {errorHide, errorShow, getModalError, setModalError} from "../features/auth/errorModalSlice.js";
+import {unwrapResult} from "@reduxjs/toolkit";
 
 const Register = () => {
     const [userType, setUserType] = useState(false);
@@ -15,37 +18,59 @@ const Register = () => {
     const { Formik } = formik;
 
     const schema = yup.object().shape({
-        email: yup.string().email().required(),
-        password1: yup.string().required(),
-        password2: yup.string().required(),
-        name: yup.string().required(),
+        email: yup.string().email().required("Email cím megadása kötelező"),
+        password1: yup.string().required("Jelszó megadása kötelező"),
+        password2: yup.string().required("Jelszó ismételt megadása kötelező").oneOf([yup.ref('password1'), null], "A két jelszó nem egyezik"),
+        name: yup.string().required("Név megadása kötelező"),
     });
 
-    // const { email, password, fullname, role } = useSelector(state => state.register);
+    // const {email, password, name, role} = useSelector(state => state.register);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const error = useSelector((state) => state.register.error);
 
-    // const dispatch = useDispatch();
-    // const navigate = useNavigate();
+    const handleSubmit = async (values) => {
+        try {
+            dispatch(setName(values.name));
+            dispatch(setEmail(values.email));
+            dispatch(setPassword(values.password1));
+            dispatch(setRole(userType ? 'company' : 'jobseeker'));
+            await dispatch(sendData()).then(unwrapResult).then((result) => {
+                if (result && result.payload === '') {
+                    dispatch(login());
+                    navigate('/');
+                    dispatch(show());
+                }
+            }).catch((error) => {
+                dispatch(errorShow());
+            });
+        } catch (error) {
+            console.error("Error sending data: ", error);
+        }
+    }
 
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     const user = { email, password, fullname, role };
-    //     try {
-    //         schema.validate(user);
-    //         dispatch(register(user));
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    //     dispatch(login());
-    //     navigate('/');
-    //     dispatch(show());
-    // }
+    const errorModal = useSelector((state) => state.errorModal.value);
 
     return (
         <>
             <NavBar />
+            <Modal show={errorModal} onHide={() => dispatch(errorHide())}>
+                <Modal.Header>
+                    <Modal.Title>Hiba</Modal.Title>
+                    <Modal.Body>
+                        {/*{console.log(error)}*/}
+                        {error && error.payload}
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="danger" onClick={() => dispatch(errorHide())} >Bezárás</Button>
+                    </Modal.Footer>
+                </Modal.Header>
+            </Modal>
             <Formik
                 validationSchema={schema}
-                onSubmit={console.log}
+                onSubmit={values => {
+                    handleSubmit(values);
+                }}
                 initialValues={{
                     email: '',
                     password1: '',
