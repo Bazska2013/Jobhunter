@@ -18,7 +18,7 @@ const Register = () => {
     const { Formik } = formik;
 
     const schema = yup.object().shape({
-        email: yup.string().email().required("Email cím megadása kötelező"),
+        email: yup.string().email("Helytelen formátum").required("Email cím megadása kötelező"),
         password1: yup.string().required("Jelszó megadása kötelező"),
         password2: yup.string().required("Jelszó ismételt megadása kötelező").oneOf([yup.ref('password1'), null], "A két jelszó nem egyezik"),
         name: yup.string().required("Név megadása kötelező"),
@@ -84,7 +84,7 @@ const Register = () => {
                             <Form.Label>Email cím</Form.Label>
                             <Form.Control
                                 type="email"
-                                placeholder="Írd be az email címed"
+                                placeholder="example@example.com"
                                 name="email"
                                 value={values.email}
                                 onChange={handleChange}
@@ -98,7 +98,6 @@ const Register = () => {
                             <Form.Label>Jelszó</Form.Label>
                             <Form.Control
                                 type="password"
-                                placeholder="Írd be a jelszavad"
                                 name="password1"
                                 value={values.password1}
                                 onChange={handleChange}
@@ -112,7 +111,6 @@ const Register = () => {
                             <Form.Label>Jelszó megerősítése</Form.Label>
                             <Form.Control
                                 type="password"
-                                placeholder="Írd be újra a jelszavad"
                                 name="password2"
                                 value={values.password2}
                                 onChange={handleChange}
@@ -132,7 +130,7 @@ const Register = () => {
                                     <Form.Label>Cég neve</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        placeholder="Írd be regisztrálni kívánt cég nevét"
+                                        placeholder="Jobhunter Kft."
                                         name="name"
                                         value={values.name}
                                         onChange={handleChange}
@@ -144,7 +142,7 @@ const Register = () => {
                                     <Form.Label>Teljes neved</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        placeholder="Írd be a teljes neved"
+                                        placeholder="John Doe"
                                         name="name"
                                         value={values.name}
                                         onChange={handleChange}
