@@ -1,41 +1,175 @@
-import {Form, InputGroup} from "react-bootstrap";
-import NavBar from "../../components/NavBar.jsx";
+import {Button, Form, InputGroup} from "react-bootstrap";
 import React from "react";
+import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {useCreateJobMutation} from "../../features/jobs/jobsApiSlice.js";
+import * as yup from 'yup';
+import {Formik} from "formik";
 
 const EditJob = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [createJob] = useCreateJobMutation();
+
+    const schema = yup.object().shape({
+        company: yup.string().required("Cég nevének megadása kötelező"),
+        position: yup.string().required("Pozíció megadása kötelező"),
+        description: yup.string().required("Leírás megadása kötelező"),
+        salaryFrom: yup.number().min(0, "Nem lehet negatív érték").required("Fizetés megadása kötelező"),
+        salaryTo: yup.number().min(yup.ref('salaryFrom'), 'Nem lehet kissebb a minimum értéknél').required("Fizetés megadása kötelező"),
+        type: yup.number().required("Foglalkoztatás formájának megadása kötelező"),
+        city: yup.string().required("Település megadása kötelező"),
+        homeOffice: yup.boolean(),
+    });
+
+    const handleSubmit = async (values) => {
+        try {
+            const result = await createJob({
+                company: values.company,
+                position: values.position,
+                description: values.description,
+                salaryFrom: values.salaryFrom,
+                salaryTo: values.salaryTo,
+                type: values.type,
+                city: values.city,
+                homeOffice: values.homeOffice,
+            }).unwrap();
+            // navigate(`/job/${result.id}`, {replace: true});
+            console.log("result: ", result);
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    }
+
     return (
-        <div>
-            <Form>
-                <Form.Group className="mb-3">
-                    <Form.Label>Cég neve</Form.Label>
-                    <Form.Control type="text" placeholder="Halo Haven Kft." />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label>Pozíció</Form.Label>
-                    <Form.Control type="text" placeholder="Sales Assistant" />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label>Leírás</Form.Label>
-                    <Form.Control as="textarea" />
-                </Form.Group>
-                <InputGroup className="mb-3">
-                    <InputGroup.Text>Fizetési sáv</InputGroup.Text>
-                    <Form.Control type="number" placeholder="tól" />
-                    <Form.Control type="number" placeholder="ig" />
-                </InputGroup>
-                <Form.Select aria-label="Foglalkoztatás formája">
-                    <option>Foglalkoztatás formája</option>
-                    <option value="1">Teljes állás (full-time)</option>
-                    <option value="2">Részmunkaidős (part-time)</option>
-                    <option value="3">Gyakornoki (internship)</option>
-                </Form.Select>
-                <Form.Group className="mb-3">
-                    <Form.Label>Település</Form.Label>
-                    <Form.Control type="text" placeholder="Budapest" />
-                </Form.Group>
-                <Form.Check id="home_office" type="checkbox" label="Home Office" />
-            </Form>
-        </div>
+        <>
+            <Formik
+                validationSchema={schema}
+                initialValues={{
+                    company: '',
+                    position: '',
+                    description: '',
+                    salaryFrom: '',
+                    salaryTo: '',
+                    type: '',
+                    city: '',
+                    homeOffice: false,
+                }}
+                onSubmit={ values => {
+                    handleSubmit(values);
+                }}
+            >
+                {({handleSubmit, handleChange, values, errors}) => (
+                    <Form noValidate onSubmit={handleSubmit}>
+                        <Form.Group className="mb-3" controlId="company">
+                            <Form.Label>Cég neve</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Halo Haven Kft."
+                                name="company"
+                                value={values.name}
+                                onChange={handleChange}
+                                isInvalid={!!errors.company}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.company}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="position">
+                            <Form.Label>Pozíció</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Sales Assistant"
+                                name="position"
+                                value={values.position}
+                                onChange={handleChange}
+                                isInvalid={!!errors.position}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.position}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="description">
+                            <Form.Label>Leírás</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                name="description"
+                                value={values.description}
+                                onChange={handleChange}
+                                isInvalid={!!errors.description}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.description}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <InputGroup className="mb-3">
+                            <InputGroup.Text>Fizetési sáv</InputGroup.Text>
+                            <Form.Control
+                                type="number"
+                                placeholder="tól"
+                                name="salaryFrom"
+                                value={values.salaryFrom}
+                                onChange={handleChange}
+                                isInvalid={!!errors.salaryFrom}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.salaryFrom}
+                            </Form.Control.Feedback>
+                            <Form.Control
+                                type="number"
+                                placeholder="ig"
+                                name="salaryTo"
+                                value={values.salaryTo}
+                                onChange={handleChange}
+                                isInvalid={!!errors.salaryTo}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.salaryTo}
+                            </Form.Control.Feedback>
+                        </InputGroup>
+                        <Form.Select aria-label="Foglalkoztatás formája"
+                                     name="type"
+                                     value={values.type}
+                                     onChange={handleChange}
+                                     isInvalid={!!errors.type}
+                        >
+                            <option>Foglalkoztatás formája</option>
+                            <option value="1">Teljes állás (full-time)</option>
+                            <option value="2">Részmunkaidős (part-time)</option>
+                            <option value="3">Gyakornoki (internship)</option>
+                        </Form.Select>
+                        <Form.Control.Feedback type="invalid">
+                            {errors.type}
+                        </Form.Control.Feedback>
+                        <Form.Group className="mb-3" controlId="city">
+                            <Form.Label>Település</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Budapest"
+                                name="city"
+                                value={values.city}
+                                onChange={handleChange}
+                                isInvalid={!!errors.city}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.city}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Check
+                            id="homeOffice"
+                            name="homeOffice"
+                            type="checkbox"
+                            label="Home Office"
+                            value={values.homeOffice}
+                            onChange={handleChange}
+                        />
+                        <Button variant="primary" type="submit">
+                            Létrehozás
+                        </Button>
+                    </Form>
+                )}
+            </Formik>
+        </>
     )
 }
 
