@@ -1,39 +1,88 @@
 import {Button, Form} from "react-bootstrap";
 import {useDispatch} from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import {login} from "../features/auth/authorizedSlice.js";
 import NavBar from "../components/NavBar.jsx";
-import React from "react";
-import {show} from "../features/auth/loginModalSlice.js";
+import React, {useState} from "react";
+import { useLoginMutation } from "../features/auth/authApiSlice.js";
+import {Formik} from "formik";
+import * as yup from "yup";
+import {login} from "../features/auth/authSlice.js";
 
 const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [authLogin] = useLoginMutation();
+    // const [values, setValues] = useState({});
+    const [errors, setErrors] = useState({});
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        dispatch(login());
-        navigate('/');
-        dispatch(show());
+    const schema = yup.object().shape({
+        email: yup.string().email("Helytelen formátum").required("Email cím megadása kötelező"),
+        password: yup.string().required("Jelszó megadása kötelező"),
+    });
+
+    const handleSubmit = async (values) => {
+        // event.preventDefault();
+        try {
+            const result = await authLogin({
+                email: values.email,
+                password: values.password,
+                strategy: 'local',
+            }).unwrap();
+            dispatch(login(result));
+            navigate('/', {replace: true});
+        } catch (error) {
+            console.log("error: ", error);
+        }
+
     }
 
     return (
         <>
-            <NavBar />
-            <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email cím</Form.Label>
-                    <Form.Control type="email" placeholder="Írd be az email címed" />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Jelszó</Form.Label>
-                    <Form.Control type="password" placeholder="Írd be a jelszavad" />
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                    Bejelentkezés
-                </Button>
-            </Form>
+            <Formik
+                validationSchema={schema}
+                initialValues={{
+                    email: '',
+                    password: '',
+                }}
+                onSubmit={ values => {
+                    handleSubmit(values);
+                }}
+            >
+                {({handleSubmit, handleChange, values, errors}) => (
+                    <Form noValidate onSubmit={handleSubmit}>
+                        <Form.Group className="mb-3" controlId="email">
+                            <Form.Label>Email cím</Form.Label>
+                            <Form.Control
+                                type="email"
+                                placeholder="example@example.com"
+                                name="email"
+                                value={values.email}
+                                onChange={handleChange}
+                                isInvalid={!!errors.email}
+                            />
+                            <Form.Control.Feedback type="invalid" >
+                                {errors.email}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="password">
+                            <Form.Label>Jelszó</Form.Label>
+                            <Form.Control
+                                type="password"
+                                name="password"
+                                value={values.password}
+                                onChange={handleChange}
+                                isInvalid={!!errors.password}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.password}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Bejelentkezés
+                        </Button>
+                    </Form>
+                )}
+            </Formik>
         </>
     );
 }
