@@ -5,7 +5,6 @@ import NavBar from "../../components/NavBar.jsx";
 export const Profile = () => {
     return (
         <div>
-            <NavBar />
             <h1>Profilom</h1>
             <Container>
                 <Row>

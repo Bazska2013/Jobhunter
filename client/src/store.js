@@ -1,16 +1,12 @@
 import {configureStore} from "@reduxjs/toolkit";
-import authorizedReducer from "./features/auth/authorizedSlice";
-import loginModalReducer from "./features/auth/loginModalSlice";
-import logoutModalReducer from "./features/auth/logoutModalSlice";
-import registerReducer from "./features/auth/registerSlice";
-import errorModalReducer from "./features/auth/errorModalSlice";
+import {authReducer} from "./features/auth/authSlice.js";
+import {authApiSlice} from "./features/auth/authApiSlice.js";
 
 export default configureStore({
     reducer: {
-        authorized: authorizedReducer,
-        loginModal: loginModalReducer,
-        logoutModal: logoutModalReducer,
-        register: registerReducer,
-        errorModal: errorModalReducer,
+        auth: authReducer,
+        [authApiSlice.reducerPath]: authApiSlice.reducer,
     },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(authApiSlice.middleware),
 });
