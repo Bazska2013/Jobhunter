@@ -1,8 +1,11 @@
 import React from 'react';
 import {Button, Col, Container, Row, Table} from "react-bootstrap";
 import NavBar from "../../components/NavBar.jsx";
+import {useSelector} from "react-redux";
+import {selectCurrentUser} from "../../features/auth/authSlice.js";
 
 export const Profile = () => {
+    let user = useSelector(selectCurrentUser);
     return (
         <div>
             <h1>Profilom</h1>
@@ -23,7 +26,7 @@ export const Profile = () => {
                                 Név
                             </td>
                             <td colSpan={2}>
-                                Margot Foster
+                                {user.fullname}
                             </td>
                         </tr>
                         <tr>
@@ -31,7 +34,7 @@ export const Profile = () => {
                                 E-mail
                             </td>
                             <td colSpan={2}>
-                                user1@jobhunter.hu
+                                {user.email}
                             </td>
                         </tr>
                         <tr>

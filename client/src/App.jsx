@@ -4,9 +4,11 @@ import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import {RequireAuth} from "./features/auth/RequireAuth.jsx";
-import {Profile} from "./pages/employee/Profile.jsx";
 import EditJob from "./pages/employer/EditJob.jsx";
 import JobListing from "./pages/JobListing.jsx";
+import NoMatch from "./pages/NoMatch.jsx";
+import {RequireCompany} from "./features/auth/RequireCompany.jsx";
+import {UserTypeProfile} from "./features/auth/UserTypeProfile.jsx";
 
 function App() {
   return (
@@ -20,7 +22,7 @@ function App() {
                 path="/profile"
                 element={
                   <RequireAuth>
-                    <Profile />
+                      <UserTypeProfile />
                   </RequireAuth>
                 }
             />
@@ -28,7 +30,9 @@ function App() {
                 path="/newjob"
                 element={
                   <RequireAuth>
-                    <EditJob />
+                      <RequireCompany>
+                        <EditJob />
+                      </RequireCompany>
                   </RequireAuth>
                 }
             />
@@ -36,7 +40,9 @@ function App() {
                 path="/editjob"
                 element={
                   <RequireAuth>
-                    <EditJob />
+                      <RequireCompany>
+                          <EditJob />
+                      </RequireCompany>
                   </RequireAuth>
                 }
             />
@@ -48,6 +54,10 @@ function App() {
                   </RequireAuth>
                 }
             />
+              <Route
+                path="*"
+                element={<NoMatch />}
+              />
           </Route>
         </Routes>
       </BrowserRouter>

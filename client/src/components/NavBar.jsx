@@ -2,9 +2,16 @@ import {Button, Container, Modal, Nav, Navbar} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {logout, selectCurrentUser} from "../features/auth/authSlice.js";
+import {useEffect, useState} from "react";
 
 const NavBar = () => {
     let user = useSelector(selectCurrentUser);
+    const [userType, setUserType] = useState(null);
+    useEffect(() => {
+        if (user) {
+            setUserType(user.role);
+        }
+    }, [user]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -21,7 +28,7 @@ const NavBar = () => {
                         {user ? ( <>
                             <Nav.Link onClick={() => navigate("/")}>Álláshirdetések</Nav.Link>
                             <Nav.Link onClick={() => navigate("/profile")}>Profilom</Nav.Link>
-                            <Nav.Link onClick={() => navigate("/editjob")}>Álláshirdetés hozzáadása</Nav.Link>
+                            {userType === "company" && <Nav.Link onClick={() => navigate("/editjob")}>Álláshirdetés hozzáadása</Nav.Link>}
                             <Nav.Link onClick={handleLogout} >Kijelentkezés</Nav.Link>
                         </>) : (<>
                             <Nav.Link onClick={() => navigate("/register")}>Regisztráció</Nav.Link>
