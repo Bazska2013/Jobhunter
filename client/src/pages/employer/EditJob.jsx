@@ -17,7 +17,7 @@ const EditJob = () => {
         description: yup.string().required("Leírás megadása kötelező"),
         salaryFrom: yup.number().min(0, "Nem lehet negatív érték").required("Fizetés megadása kötelező"),
         salaryTo: yup.number().min(yup.ref('salaryFrom'), 'Nem lehet kissebb a minimum értéknél').required("Fizetés megadása kötelező"),
-        type: yup.number().required("Foglalkoztatás formájának megadása kötelező"),
+        type: yup.string().required("Foglalkoztatás formájának megadása kötelező"),
         city: yup.string().required("Település megadása kötelező"),
         homeOffice: yup.boolean(),
     });
@@ -134,9 +134,9 @@ const EditJob = () => {
                                      isInvalid={!!errors.type}
                         >
                             <option>Foglalkoztatás formája</option>
-                            <option value="1">Teljes állás (full-time)</option>
-                            <option value="2">Részmunkaidős (part-time)</option>
-                            <option value="3">Gyakornoki (internship)</option>
+                            <option value="full-time">Teljes állás (full-time)</option>
+                            <option value="part-time">Részmunkaidős (part-time)</option>
+                            <option value="internship">Gyakornoki (internship)</option>
                         </Form.Select>
                         <Form.Control.Feedback type="invalid">
                             {errors.type}

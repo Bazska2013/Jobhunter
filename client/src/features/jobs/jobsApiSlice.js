@@ -6,6 +6,13 @@ export const jobsApiSlice = createApi({
     reducerPath: "jobsApi",
     baseQuery: fetchBaseQuery({
         baseUrl: BASE_URL,
+        prepareHeaders: (headers) => {
+            const token = localStorage.getItem("token");
+            if (token) {
+                headers.set('authorization', `Bearer ${token}`);
+            }
+            return headers;
+        }
     }),
     endpoints: (build) => ({
         createJob: build.mutation({
