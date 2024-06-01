@@ -10,5 +10,5 @@ export default configureStore({
         [jobsApiSlice.reducerPath]: jobsApiSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(authApiSlice.middleware),
+        getDefaultMiddleware().concat(authApiSlice.middleware, jobsApiSlice.middleware),
 });

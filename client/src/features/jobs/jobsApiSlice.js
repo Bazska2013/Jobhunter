@@ -23,8 +23,16 @@ export const jobsApiSlice = createApi({
                     body,
                 }
             }
+        }),
+        allJobs: build.query({
+            query: () => {
+                return {
+                    url: "jobs",
+                    method: "GET",
+                }
+            }
         })
     })
 });
 
-export const { useCreateJobMutation } = jobsApiSlice;
+export const { useCreateJobMutation, useAllJobsQuery } = jobsApiSlice;

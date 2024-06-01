@@ -3,12 +3,24 @@ import React, {useState} from "react";
 import {useSelector} from "react-redux";
 import NavBar from "../components/NavBar.jsx";
 import {selectCurrentUser} from "../features/auth/authSlice.js";
+import {useAllJobsQuery} from "../features/jobs/jobsApiSlice.js";
 
 const Home = () => {
     const [show, setShow] = useState(false);
     let user = useSelector(selectCurrentUser);
 
-    return (
+    const { data: response, isLoading, isError } = useAllJobsQuery();
+    const jobs = response?.data;
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (isError) {
+        return <div>Error loading jobs</div>;
+    }
+
+        return (
         <>
             <Offcanvas show={show} onHide={() => {setShow(false)}} placement="end" >
                 <Offcanvas.Header closeButton >
@@ -63,16 +75,18 @@ const Home = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <p>Regional Paradign Technician</p>
-                            <p>Budapest</p>
-                        </td>
-                        <td>
-                            <p>500.000-1M Ft.</p>
-                            <p>Teljes munkaidős</p>
-                        </td>
-                    </tr>
+                    {Array.isArray(jobs) && jobs.map((job) => (
+                        <tr key={job.id}>
+                            <td>
+                                <p>{job.company}</p>
+                                <p>{job.city}</p>
+                            </td>
+                            <td>
+                                <p>{job.salaryFrom}-{job.salaryTo} Ft.</p>
+                                <p>{job.type}</p>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </Table>
         </>
