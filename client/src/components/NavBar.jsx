@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {logout, selectCurrentUser} from "../features/auth/authSlice.js";
 import {useEffect, useState} from "react";
+import {setSuccessMessage, show} from "../features/modals/showModalSlice.js";
 
 const NavBar = () => {
     let user = useSelector(selectCurrentUser);
@@ -17,6 +18,8 @@ const NavBar = () => {
 
     const handleLogout = () => {
         dispatch(logout());
+        dispatch(setSuccessMessage("Sikeres kijelentkezés"));
+        dispatch(show());
     }
     return (
         <Navbar>

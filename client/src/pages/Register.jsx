@@ -8,12 +8,15 @@ import * as yup from "yup";
 import {useRegisterMutation} from "../features/auth/authApiSlice.js";
 import {login} from "../features/auth/authSlice.js";
 import {Formik} from "formik";
+import ErrorModal from "../components/ErrorModal.jsx";
+import {setSuccessMessage, show} from "../features/modals/showModalSlice.js";
 
 const Register = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [userType, setUserType] = useState(false);
     const [authRegister] = useRegisterMutation();
+    const [errors, setErrors] = useState('');
 
     const schema = yup.object().shape({
         email: yup.string().email("Helytelen formátum").required("Email cím megadása kötelező"),
@@ -35,14 +38,18 @@ const Register = () => {
                 password: result.password,
                 strategy: 'local',
             }));
-            navigate('/', {replace: true});
+            dispatch(setSuccessMessage("Sikeres regisztráció"));
+            dispatch(show())
+            navigate('/login', {replace: true});
         } catch (error) {
             console.log("error: ", error);
+            setErrors(error.status.toString());
         }
     }
 
     return (
         <>
+            <ErrorModal error={errors} onClose={() => setErrors('')} />
             <Formik
                 validationSchema={schema}
                 onSubmit={values => {

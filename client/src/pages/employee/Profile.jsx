@@ -42,7 +42,7 @@ export const Profile = () => {
                                 Státusz
                             </td>
                             <td colSpan={2}>
-                                Munkakereső
+                                {user.role}
                             </td>
                         </tr>
                         <tr>

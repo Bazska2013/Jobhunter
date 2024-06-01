@@ -7,13 +7,15 @@ import { useLoginMutation } from "../features/auth/authApiSlice.js";
 import {Formik} from "formik";
 import * as yup from "yup";
 import {login} from "../features/auth/authSlice.js";
+import ErrorModal from "../components/ErrorModal.jsx";
+import {setSuccessMessage, show} from "../features/modals/showModalSlice.js";
 
 const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [authLogin] = useLoginMutation();
     // const [values, setValues] = useState({});
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState('');
 
     const schema = yup.object().shape({
         email: yup.string().email("Helytelen formátum").required("Email cím megadása kötelező"),
@@ -29,15 +31,19 @@ const Login = () => {
                 strategy: 'local',
             }).unwrap();
             dispatch(login(result));
+            dispatch(setSuccessMessage("Sikeres bejelentkezés"));
+            dispatch(show())
             navigate('/', {replace: true});
         } catch (error) {
             console.log("error: ", error);
+            setErrors(error.status.toString());
         }
 
     }
 
     return (
         <>
+            <ErrorModal error={errors} onClose={() => setErrors('')} />
             <Formik
                 validationSchema={schema}
                 initialValues={{
