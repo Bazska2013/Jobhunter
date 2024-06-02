@@ -1,16 +1,25 @@
 import {Col, Container, InputGroup, Row, Form, Button, Table, Offcanvas} from "react-bootstrap";
 import React, {useState} from "react";
 import {useSelector} from "react-redux";
-import NavBar from "../components/NavBar.jsx";
 import {selectCurrentUser} from "../features/auth/authSlice.js";
-import {useAllJobsQuery} from "../features/jobs/jobsApiSlice.js";
+import {useAllJobsQuery, useFilterJobsQuery} from "../features/jobs/jobsApiSlice.js";
 
 const Home = () => {
     const [show, setShow] = useState(false);
     let user = useSelector(selectCurrentUser);
 
-    const { data: response, isLoading, isError } = useAllJobsQuery();
-    const jobs = response?.data;
+    const [searchParams, setSearchParams] = useState({});
+    const { data: allJobsResponse, isLoading: allJobsLoading, isError: allJobsError } = useAllJobsQuery();
+    const { data: filteredJobsResponse = {}, isLoading: filteredJobsLoading, isError: filteredJobsError } = useFilterJobsQuery(searchParams);
+
+    const handleSearchChange = (e) => {
+        const value = e.target.value;
+        setSearchParams(value ? { 'company[$like]': `%${value}%` } : {});
+    };
+
+    const jobs = searchParams['company[$like]'] ? filteredJobsResponse?.data : allJobsResponse?.data;
+    const isLoading = searchParams['company[$like]'] ? filteredJobsLoading : allJobsLoading;
+    const isError = searchParams['company[$like]'] ? filteredJobsError : allJobsError;
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -38,9 +47,9 @@ const Home = () => {
                     <Form.Group>
                         <Form.Label>Foglalkoztatás típusa</Form.Label>
                         <Form.Select aria-label="Foglalkoztatás formája">
-                            <option value="1">Teljes állás (full-time)</option>
-                            <option value="2">Részmunkaidős (part-time)</option>
-                            <option value="3">Gyakornoki (internship)</option>
+                            <option value="full-time">Teljes állás (full-time)</option>
+                            <option value="part-time">Részmunkaidős (part-time)</option>
+                            <option value="internship">Gyakornoki (internship)</option>
                         </Form.Select>
                     </Form.Group>
                     <Form.Group>
@@ -59,7 +68,7 @@ const Home = () => {
                 </Row>
                 <Row>
                     <Col>
-                        <Form.Control type="text" placeholder="Keresés" />
+                        <Form.Control type="text" placeholder="Keresés" onChange={handleSearchChange} />
                     </Col>
                     <Col>
                         <Button variant="primary">Keresés</Button>

@@ -31,8 +31,17 @@ export const jobsApiSlice = createApi({
                     method: "GET",
                 }
             }
+        }),
+        filterJobs: build.query({
+            query: (params) => {
+                return {
+                    url: `jobs?${new URLSearchParams(params).toString()}`,
+                    method: "GET",
+                }
+            }
+
         })
     })
 });
 
-export const { useCreateJobMutation, useAllJobsQuery } = jobsApiSlice;
+export const { useCreateJobMutation, useAllJobsQuery, useFilterJobsQuery } = jobsApiSlice;
