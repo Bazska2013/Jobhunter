@@ -6,20 +6,103 @@ import {useAllJobsQuery, useFilterJobsQuery} from "../features/jobs/jobsApiSlice
 
 const Home = () => {
     const [show, setShow] = useState(false);
+
+    const [search, setSearch] = useState({
+        company: "",
+        salaryFrom: "",
+        salaryTo: "",
+        type: "",
+        city: "",
+        homeOffice: false,
+    });
+
+    const handleSearchChange = (t, value) => {
+        switch (t) {
+            case "company":
+                setSearch({...search, company: value});
+                break;
+            case "salaryFrom":
+                setSearch({...search, salaryFrom: value});
+                break;
+            case "salaryTo":
+                setSearch({...search, salaryTo: value});
+                break;
+            case "type":
+                setSearch({...search, type: value});
+                break;
+            case "city":
+                setSearch({...search, city: value});
+                break;
+            case "homeOffice":
+                setSearch({...search, homeOffice: value});
+                break;
+            default:
+                break;
+        }
+    }
+
+    const handleSend = () => {
+        let sendValues = {};
+        for (const [key, value] of Object.entries(search)) {
+            if (value) {
+                switch (key) {
+                    case 'company':
+                        sendValues['company[$like]'] = `%${value}%`;
+                        break;
+                    case 'salaryFrom':
+                        sendValues['salaryFrom[$gte]'] = value;
+                        break;
+                    case 'salaryTo':
+                        sendValues['salaryTo[$lte]'] = value;
+                        break;
+                    case 'type':
+                        sendValues['type'] = value;
+                        break;
+                    case 'city':
+                        sendValues['city'] = value;
+                        break;
+                    case 'homeOffice':
+                        sendValues['homeOffice'] = value === 'true';
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        setSearchParams(sendValues);
+    }
+
+    const handleFilterDelete = () => {
+        setSearchParams({});
+        setSearch({
+            company: "",
+            salaryFrom: "",
+            salaryTo: "",
+            type: "",
+            city: "",
+            homeOffice: false,
+        });
+    }
+
     let user = useSelector(selectCurrentUser);
 
     const [searchParams, setSearchParams] = useState({});
+
+
     const { data: allJobsResponse, isLoading: allJobsLoading, isError: allJobsError } = useAllJobsQuery();
     const { data: filteredJobsResponse = {}, isLoading: filteredJobsLoading, isError: filteredJobsError } = useFilterJobsQuery(searchParams);
 
-    const handleSearchChange = (e) => {
-        const value = e.target.value;
-        setSearchParams(value ? { 'company[$like]': `%${value}%` } : {});
-    };
 
-    const jobs = searchParams['company[$like]'] ? filteredJobsResponse?.data : allJobsResponse?.data;
-    const isLoading = searchParams['company[$like]'] ? filteredJobsLoading : allJobsLoading;
-    const isError = searchParams['company[$like]'] ? filteredJobsError : allJobsError;
+    // const handleSearchChange = (e) => {
+    //     const value = e.target.value;
+    //     setSearchParams(value ? { 'company[$like]': `%${value}%` } : {});
+    // };
+
+    const isFilterApplied = Object.keys(searchParams).length > 0;
+
+    const jobs = isFilterApplied ? filteredJobsResponse?.data : allJobsResponse?.data;
+    const isLoading = isFilterApplied ? filteredJobsLoading : allJobsLoading;
+    const isError = isFilterApplied ? filteredJobsError : allJobsError;
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -38,15 +121,15 @@ const Home = () => {
                 <Offcanvas.Body>
                     <Form.Group>
                         <Form.Label>Fizetési sáv alja</Form.Label>
-                        <Form.Control type="number" />
+                        <Form.Control type="number" value={search.salaryFrom} onChange={(e) => {handleSearchChange("salaryFrom", e.target.value)}} />
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Fizetési sáv teteje</Form.Label>
-                        <Form.Control type="number" />
+                        <Form.Control type="number" value={search.salaryTo} onChange={(e) => {handleSearchChange("salaryTo", e.target.value)}} />
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Foglalkoztatás típusa</Form.Label>
-                        <Form.Select aria-label="Foglalkoztatás formája">
+                        <Form.Select aria-label="Foglalkoztatás formája" value={search.type} onChange={(e) => {handleSearchChange("type", e.target.value)}}>
                             <option value="full-time">Teljes állás (full-time)</option>
                             <option value="part-time">Részmunkaidős (part-time)</option>
                             <option value="internship">Gyakornoki (internship)</option>
@@ -54,9 +137,11 @@ const Home = () => {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Település</Form.Label>
-                        <Form.Control type="text" />
+                        <Form.Control type="text" value={search.city} onChange={(e) => {handleSearchChange("city", e.target.value)}} />
                     </Form.Group>
-                    <Form.Check id="home_office" type="checkbox" label="Home Office" />
+                    <Form.Check id="home_office" value={search.homeOffice} type="checkbox" label="Home Office" onChange={(e) => {handleSearchChange("homeOffice", e.target.value)}} />
+                    <Button variant="primary" onClick={handleSend}>Keresés</Button>
+                    <Button variant="danger" onClick={handleFilterDelete}>Szűrők törlése</Button>
                 </Offcanvas.Body>
             </Offcanvas>
             <Container>
@@ -68,10 +153,10 @@ const Home = () => {
                 </Row>
                 <Row>
                     <Col>
-                        <Form.Control type="text" placeholder="Keresés" onChange={handleSearchChange} />
+                        <Form.Control type="text" placeholder="Keresés" onChange={(e) => {handleSearchChange("company", e.target.value)}} />
                     </Col>
                     <Col>
-                        <Button variant="primary">Keresés</Button>
+                        <Button variant="primary" onClick={handleSend}>Keresés</Button>
                         {user && <Button variant="light" onClick={() => {setShow(true)}}>Szűrés</Button>}
                     </Col>
                 </Row>
