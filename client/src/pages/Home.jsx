@@ -1,11 +1,14 @@
-import {Col, Container, InputGroup, Row, Form, Button, Table, Offcanvas} from "react-bootstrap";
+import {Col, Container, InputGroup, Row, Form, Button, Table, Offcanvas, Spinner, Card} from "react-bootstrap";
 import React, {useState} from "react";
 import {useSelector} from "react-redux";
 import {selectCurrentUser} from "../features/auth/authSlice.js";
 import {useAllJobsQuery, useFilterJobsQuery} from "../features/jobs/jobsApiSlice.js";
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
     const [show, setShow] = useState(false);
+
+    const navigate = useNavigate();
 
     const [search, setSearch] = useState({
         company: "",
@@ -104,14 +107,6 @@ const Home = () => {
     const isLoading = isFilterApplied ? filteredJobsLoading : allJobsLoading;
     const isError = isFilterApplied ? filteredJobsError : allJobsError;
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    if (isError) {
-        return <div>Error loading jobs</div>;
-    }
-
         return (
         <>
             <Offcanvas show={show} onHide={() => {setShow(false)}} placement="end" >
@@ -169,18 +164,32 @@ const Home = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {Array.isArray(jobs) && jobs.map((job) => (
-                        <tr key={job.id}>
-                            <td>
-                                <p>{job.company}</p>
-                                <p>{job.city}</p>
-                            </td>
-                            <td>
-                                <p>{job.salaryFrom}-{job.salaryTo} Ft.</p>
-                                <p>{job.type}</p>
-                            </td>
-                        </tr>
-                    ))}
+                    {isLoading === true ? <>
+                        <Spinner animation="border" variant="secondary" role="status" >
+                            <span className="visually-hidden" >Adatok betöltése...</span>
+                        </Spinner>
+                    </> : (isError === true ? <>
+                        <Card>
+                            <Card.Body>
+                                <Card.Title>Hiba</Card.Title>
+                                <Card.Text>Hiba történt az adatok betöltése során. Kattintson az Újrapróbálkozás gombra az adatok újbóli lekéréséhez.</Card.Text>
+                                <Button variant="primary" onClick={() => {navigate(0)}}>Újrapróbálkozás</Button>
+                            </Card.Body>
+                        </Card>
+                    </> : <>
+                        {Array.isArray(jobs) && jobs.map((job) => (
+                            <tr key={job.id}>
+                                <td>
+                                    <p>{job.company}</p>
+                                    <p>{job.city}</p>
+                                </td>
+                                <td>
+                                    <p>{job.salaryFrom}-{job.salaryTo} Ft.</p>
+                                    <p>{job.type}</p>
+                                </td>
+                            </tr>
+                        ))}
+                    </>)}
                 </tbody>
             </Table>
         </>
