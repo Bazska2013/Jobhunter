@@ -47,7 +47,7 @@ function App() {
                 }
             />
             <Route
-                path="/job"
+                path="/job/:id"
                 element={
                   <RequireAuth>
                     <JobListing />

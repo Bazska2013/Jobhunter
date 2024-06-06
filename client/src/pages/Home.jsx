@@ -178,7 +178,7 @@ const Home = () => {
                             </thead>
                             <tbody>
                                 {Array.isArray(jobs) && jobs.map((job) => (
-                                    <tr key={job.id}>
+                                    <tr key={job.id} onClick={() => {navigate('/job/'+job.id)}}>
                                         <td>
                                             <p>{job.company}</p>
                                             <p>{job.city}</p>

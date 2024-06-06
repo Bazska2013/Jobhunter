@@ -26,7 +26,7 @@ export const Profile = () => {
                         </Col>
                         <Col>
                             <Button variant="light" onClick={() => {navigate('/editjob/'+job.id)}} >Szerkesztés</Button>
-                            <Button variant="light">Megtekintés</Button>
+                            <Button variant="light" onClick={() => {navigate('/job/'+job.id)}}>Megtekintés</Button>
                             <Button variant="danger">Törlés</Button>
                         </Col>
                     </Row>
