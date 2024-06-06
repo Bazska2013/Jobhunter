@@ -37,7 +37,7 @@ function App() {
                 }
             />
             <Route
-                path="/editjob"
+                path="/editjob/:id"
                 element={
                   <RequireAuth>
                       <RequireCompany>

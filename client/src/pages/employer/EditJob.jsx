@@ -1,8 +1,8 @@
 import {Button, Form, InputGroup} from "react-bootstrap";
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router-dom";
-import {useCreateJobMutation} from "../../features/jobs/jobsApiSlice.js";
+import {useNavigate, useParams} from "react-router-dom";
+import {useCreateJobMutation, useOneJobQuery} from "../../features/jobs/jobsApiSlice.js";
 import * as yup from 'yup';
 import {Formik} from "formik";
 
@@ -10,6 +10,35 @@ const EditJob = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [createJob] = useCreateJobMutation();
+    let { id } = useParams();
+    const [initialValues, setInitialValues] = useState({
+        company: '',
+        position: '',
+        description: '',
+        salaryFrom: '',
+        salaryTo: '',
+        type: '',
+        city: '',
+        homeOffice: false,
+    });
+
+    const { data, isLoading, isError } = useOneJobQuery(id);
+
+    useEffect(() => {
+        if (id && !isLoading && !isError) {
+            const job = data;
+            setInitialValues({
+                company: job.company,
+                position: job.position,
+                description: job.description,
+                salaryFrom: job.salaryFrom,
+                salaryTo: job.salaryTo,
+                type: job.type,
+                city: job.city,
+                homeOffice: job.homeOffice,
+            });
+        }
+    }, [id, data, isLoading, isError]);
 
     const schema = yup.object().shape({
         company: yup.string().required("Cég nevének megadása kötelező"),
@@ -45,16 +74,8 @@ const EditJob = () => {
         <>
             <Formik
                 validationSchema={schema}
-                initialValues={{
-                    company: '',
-                    position: '',
-                    description: '',
-                    salaryFrom: '',
-                    salaryTo: '',
-                    type: '',
-                    city: '',
-                    homeOffice: false,
-                }}
+                initialValues={initialValues}
+                enableReinitialize={true}
                 onSubmit={ values => {
                     handleSubmit(values);
                 }}
@@ -67,7 +88,7 @@ const EditJob = () => {
                                 type="text"
                                 placeholder="Halo Haven Kft."
                                 name="company"
-                                value={values.name}
+                                value={values.company}
                                 onChange={handleChange}
                                 isInvalid={!!errors.company}
                             />

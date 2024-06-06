@@ -156,14 +156,6 @@ const Home = () => {
                     </Col>
                 </Row>
             </Container>
-            <Table>
-                <thead>
-                    <tr>
-                        <th>ÁLLÁS NEVE</th>
-                        <th>BÉREZÉS</th>
-                    </tr>
-                </thead>
-                <tbody>
                     {isLoading === true ? <>
                         <Spinner animation="border" variant="secondary" role="status" >
                             <span className="visually-hidden" >Adatok betöltése...</span>
@@ -177,21 +169,30 @@ const Home = () => {
                             </Card.Body>
                         </Card>
                     </> : <>
-                        {Array.isArray(jobs) && jobs.map((job) => (
-                            <tr key={job.id}>
-                                <td>
-                                    <p>{job.company}</p>
-                                    <p>{job.city}</p>
-                                </td>
-                                <td>
-                                    <p>{job.salaryFrom}-{job.salaryTo} Ft.</p>
-                                    <p>{job.type}</p>
-                                </td>
-                            </tr>
-                        ))}
-                    </>)}
-                </tbody>
-            </Table>
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th>ÁLLÁS NEVE</th>
+                                    <th>BÉREZÉS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Array.isArray(jobs) && jobs.map((job) => (
+                                    <tr key={job.id}>
+                                        <td>
+                                            <p>{job.company}</p>
+                                            <p>{job.city}</p>
+                                        </td>
+                                        <td>
+                                            <p>{job.salaryFrom}-{job.salaryTo} Ft.</p>
+                                            <p>{job.type}</p>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                        </>
+                    )}
         </>
     )
 }
