@@ -10,6 +10,7 @@ import {
     useDeleteApplicationFromAJobMutation
 } from "../features/jobs/applicantsApiSlice.js";
 import {setSuccessMessage, show} from "../features/modals/showModalSlice.js";
+import Applicants from "../components/Applicants.jsx";
 
 const JobListing = () => {
     const dispatch = useDispatch();
@@ -134,6 +135,7 @@ const JobListing = () => {
                     </tbody>
                 </Table>
             </Container>
+            {user.role === "company" && job.userId === user.id ? <Applicants id={id} />: <></>}
         </>
     );
 }

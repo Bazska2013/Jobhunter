@@ -4,11 +4,13 @@ import {authApiSlice} from "./features/auth/authApiSlice.js";
 import {jobsApiSlice} from "./features/jobs/jobsApiSlice.js";
 import {showModalReducer} from "./features/modals/showModalSlice.js";
 import {applicantsApiSlice} from "./features/jobs/applicantsApiSlice.js";
+import {showApplicantModalReducer} from "./features/modals/showApplicantModalSlice.js";
 
 export default configureStore({
     reducer: {
         auth: authReducer,
         showModal: showModalReducer,
+        showApplicantModal: showApplicantModalReducer,
         [authApiSlice.reducerPath]: authApiSlice.reducer,
         [jobsApiSlice.reducerPath]: jobsApiSlice.reducer,
         [applicantsApiSlice.reducerPath]: applicantsApiSlice.reducer,
