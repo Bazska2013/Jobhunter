@@ -23,7 +23,9 @@ const EditJob = () => {
         homeOffice: false,
     });
 
-    const { data, isLoading, isError } = useOneJobQuery(id);
+    const { data, isLoading, isError } = useOneJobQuery(id, {
+        skip: !id,
+    });
 
     useEffect(() => {
         if (id && !isLoading && !isError) {
@@ -53,17 +55,25 @@ const EditJob = () => {
     });
 
     const handleSubmit = async (values) => {
-        if (id) {
+        if (values.homeOffice === 0) {
+            values.homeOffice = false;
+        } else if (values.homeOffice === 1) {
+            values.homeOffice = true;
+        }
+        if (id !== null) {
             try {
-                const result = await modifyJob(id, {
-                company: values.company,
-                position: values.position,
-                description: values.description,
-                salaryFrom: values.salaryFrom,
-                salaryTo: values.salaryTo,
-                type: values.type,
-                city: values.city,
-                homeOffice: values.homeOffice,
+                const result = await modifyJob({
+                    body: {
+                        company: values.company,
+                        position: values.position,
+                        description: values.description,
+                        salaryFrom: values.salaryFrom,
+                        salaryTo: values.salaryTo,
+                        type: values.type,
+                        city: values.city,
+                        homeOffice: values.homeOffice,
+                    },
+                    id: id
                 }).unwrap();
                 console.log(result);
             } catch (error) {
