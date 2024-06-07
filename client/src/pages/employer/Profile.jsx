@@ -2,16 +2,27 @@ import React from 'react';
 import {Button, Col, Container, Row} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {selectCurrentUser} from "../../features/auth/authSlice"
-import { useFilterJobsQuery } from '../../features/jobs/jobsApiSlice';
+import { useDeleteJobMutation, useFilterJobsQuery} from '../../features/jobs/jobsApiSlice';
 import { useNavigate } from 'react-router-dom';
 
 export const Profile = () => {
     let user = useSelector(selectCurrentUser);
     const navigate = useNavigate();
+    const [deleteJob] = useDeleteJobMutation();
 
     const { data: allJobsResponse, isLoading: allJobsLoading, isError: allJobsError} = useFilterJobsQuery({'userId' : user.id});
 
     const jobs = allJobsResponse?.data;
+
+    const handleDelete = async (id) => {
+        try {
+            const result = await deleteJob(id).unwrap();
+            console.log(result);
+        } catch (error) {
+            console.error(error);
+        }
+        navigate(0);
+    }
 
     return (
         <div>
@@ -27,7 +38,7 @@ export const Profile = () => {
                         <Col>
                             <Button variant="light" onClick={() => {navigate('/editjob/'+job.id)}} >Szerkesztés</Button>
                             <Button variant="light" onClick={() => {navigate('/job/'+job.id)}}>Megtekintés</Button>
-                            <Button variant="danger">Törlés</Button>
+                            <Button variant="danger" onClick={() => {handleDelete(job.id)}}>Törlés</Button>
                         </Col>
                     </Row>
                     <Row>

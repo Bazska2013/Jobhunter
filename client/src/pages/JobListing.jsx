@@ -1,24 +1,75 @@
 import {Button, Col, Container, Row, Table} from "react-bootstrap";
-import NavBar from "../components/NavBar.jsx";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {useNavigate, useParams} from "react-router-dom";
 import { useOneJobQuery } from "../features/jobs/jobsApiSlice.js";
 import { selectCurrentUser } from "../features/auth/authSlice.js";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    useApplicantsForAJobQuery,
+    useApplyForJobMutation,
+    useDeleteApplicationFromAJobMutation
+} from "../features/jobs/applicantsApiSlice.js";
+import {setSuccessMessage, show} from "../features/modals/showModalSlice.js";
 
 const JobListing = () => {
+    const dispatch = useDispatch();
     let user = useSelector(selectCurrentUser);
+    const navigate = useNavigate();
+    const [ applyForJob ] = useApplyForJobMutation();
+    const [ deleteApply ] = useDeleteApplicationFromAJobMutation();
     let { id } = useParams();
+    const [alreadyApplied, setAlreadyApplied] = useState(false);
 
     const [job, setJob] = useState({});
 
     const { data, isLoading, isError } = useOneJobQuery(id);
+
+    const {data: jobApplicants, isLoading: applicantsLoading, isError: applicantsError, refetch: refetchApplicants} = useApplicantsForAJobQuery({jobId: id});
+
+    useEffect(() => {
+        if (jobApplicants && jobApplicants.length > 0) {
+            jobApplicants.forEach(applicant => {
+                if (applicant.userId === user.id) {
+                    setAlreadyApplied(true);
+                }
+            });
+        }
+    }, [jobApplicants, user.id, refetchApplicants]);
 
     useEffect(() => {
         if (id && !isLoading && !isError) {
             setJob(data);
         }
     }, [id, data, isLoading, isError]);
+
+    const handleApply = async () => {
+        try {
+            const result = await applyForJob({
+                jobId: Number(id),
+            }).unwrap();
+            console.log(result);
+            dispatch(setSuccessMessage("Sikeres jelentkezés"));
+            dispatch(show());
+            refetchApplicants();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleRemoveApply = async () => {
+        try {
+            const result = await deleteApply({
+                jobId: Number(id),
+            }).unwrap();
+            console.log(result);
+            dispatch(setSuccessMessage("Sikeres lejelentkezés"));
+            dispatch(show());
+            refetchApplicants();
+            setAlreadyApplied(false);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     return (
         <>
@@ -38,11 +89,15 @@ const JobListing = () => {
                     </Col>
                     {user.role === "company" ? (job.userId === user.id ? <>
                         <Col>
-                            <Button variant="primary">Szerkesztés</Button>
+                            <Button variant="primary" onClick={() => {navigate('/editjob/'+id)}} >Szerkesztés</Button>
                         </Col>
                     </> : <></>) : <>
                         <Col>
-                            <Button variant="primary">Jelentkezés</Button>
+                            {alreadyApplied ? <>
+                                <Button variant="primary" onClick={() => {handleRemoveApply()}}>Jelentkezés visszavonása</Button>
+                            </> : <>
+                                <Button variant="primary" onClick={() => {handleApply()}}>Jelentkezés</Button>
+                            </>}
                         </Col>
                     </>}
                 </Row>

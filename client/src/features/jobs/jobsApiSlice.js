@@ -1,6 +1,6 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 
-const BASE_URL = "https://3030-bazska2013-jobhunter-extiulkjdh5.ws-eu114.gitpod.io/";
+const BASE_URL = "http://localhost:3030/";
 
 export const jobsApiSlice = createApi({
     reducerPath: "jobsApi",
@@ -57,8 +57,16 @@ export const jobsApiSlice = createApi({
                     body,
                 }
             }
+        }),
+        deleteJob: build.mutation({
+            query: (id) => {
+                return {
+                    url: `jobs/${id}`,
+                    method: "DELETE",
+                }
+            }
         })
     })
 });
 
-export const { useCreateJobMutation, useAllJobsQuery, useFilterJobsQuery, useOneJobQuery, useModifyJobMutation } = jobsApiSlice;
+export const { useCreateJobMutation, useAllJobsQuery, useFilterJobsQuery, useOneJobQuery, useModifyJobMutation, useDeleteJobMutation } = jobsApiSlice;

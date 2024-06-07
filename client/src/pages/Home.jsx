@@ -95,12 +95,6 @@ const Home = () => {
     const { data: allJobsResponse, isLoading: allJobsLoading, isError: allJobsError } = useAllJobsQuery();
     const { data: filteredJobsResponse = {}, isLoading: filteredJobsLoading, isError: filteredJobsError } = useFilterJobsQuery(searchParams);
 
-
-    // const handleSearchChange = (e) => {
-    //     const value = e.target.value;
-    //     setSearchParams(value ? { 'company[$like]': `%${value}%` } : {});
-    // };
-
     const isFilterApplied = Object.keys(searchParams).length > 0;
 
     const jobs = isFilterApplied ? filteredJobsResponse?.data : allJobsResponse?.data;

@@ -60,7 +60,7 @@ const EditJob = () => {
         } else if (values.homeOffice === 1) {
             values.homeOffice = true;
         }
-        if (id !== null) {
+        if (id !== undefined) {
             try {
                 const result = await modifyJob({
                     body: {
@@ -97,6 +97,7 @@ const EditJob = () => {
                 console.log("error: ", error);
             }
         }
+        navigate('/profile');
     }
 
     return (
