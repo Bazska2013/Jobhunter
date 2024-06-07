@@ -1,6 +1,5 @@
 import {Button, Form, Modal} from "react-bootstrap";
 import React, {useState} from "react";
-import Experiences from "../components/Experiences.jsx";
 import NavBar from "../components/NavBar.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
@@ -8,7 +7,7 @@ import * as yup from "yup";
 import {useRegisterMutation} from "../features/auth/authApiSlice.js";
 import {login} from "../features/auth/authSlice.js";
 import {Formik} from "formik";
-import ErrorModal from "../components/ErrorModal.jsx";
+import ErrorModal from "../components/modals/ErrorModal.jsx";
 import {setSuccessMessage, show} from "../features/modals/showModalSlice.js";
 
 const Register = () => {

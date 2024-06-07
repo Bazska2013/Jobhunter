@@ -7,7 +7,7 @@ import { useLoginMutation } from "../features/auth/authApiSlice.js";
 import {Formik} from "formik";
 import * as yup from "yup";
 import {login} from "../features/auth/authSlice.js";
-import ErrorModal from "../components/ErrorModal.jsx";
+import ErrorModal from "../components/modals/ErrorModal.jsx";
 import {setSuccessMessage, show} from "../features/modals/showModalSlice.js";
 
 const Login = () => {

@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {logout, selectCurrentUser} from "../features/auth/authSlice.js";
 import {useEffect, useState} from "react";
 import {setSuccessMessage, show} from "../features/modals/showModalSlice.js";
+import logo from "../assets/logo.svg";
 
 const NavBar = () => {
     let user = useSelector(selectCurrentUser);
@@ -24,7 +25,15 @@ const NavBar = () => {
     return (
         <Navbar>
             <Container>
-                <Navbar.Brand onClick={() => navigate("/")}>Jobhunter</Navbar.Brand>
+                <Navbar.Brand onClick={() => navigate("/")}>
+                    <img
+                        alt="Jobhunter"
+                        src={logo}
+                        width="30"
+                        height="30"
+                        className="d-inline-block align-top"
+                    />{' '}Jobhunter
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">

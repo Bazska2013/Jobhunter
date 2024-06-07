@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {Button, Col, Modal, Row, Table} from "react-bootstrap";
-import {hideApplicant} from "../features/modals/showApplicantModalSlice.js";
+import {hideApplicant} from "../../features/modals/showApplicantModalSlice.js";
 
 const ApplicantModal = (props) => {
     const dispatch = useDispatch();
