@@ -31,7 +31,7 @@ const NavBar = () => {
                         {user ? ( <>
                             <Nav.Link onClick={() => navigate("/")}>Álláshirdetések</Nav.Link>
                             <Nav.Link onClick={() => navigate("/profile")}>Profilom</Nav.Link>
-                            {userType === "company" && <Nav.Link onClick={() => navigate("/editjob")}>Álláshirdetés hozzáadása</Nav.Link>}
+                            {userType === "company" && <Nav.Link onClick={() => navigate("/newjob")}>Álláshirdetés hozzáadása</Nav.Link>}
                             <Nav.Link onClick={handleLogout} >Kijelentkezés</Nav.Link>
                         </>) : (<>
                             <Nav.Link onClick={() => navigate("/register")}>Regisztráció</Nav.Link>

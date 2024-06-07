@@ -2,7 +2,7 @@ import {Button, Form, InputGroup} from "react-bootstrap";
 import React, {useState, useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
-import {useCreateJobMutation, useOneJobQuery} from "../../features/jobs/jobsApiSlice.js";
+import {useCreateJobMutation, useOneJobQuery, useModifyJobMutation} from "../../features/jobs/jobsApiSlice.js";
 import * as yup from 'yup';
 import {Formik} from "formik";
 
@@ -10,6 +10,7 @@ const EditJob = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [createJob] = useCreateJobMutation();
+    const [modifyJob] = useModifyJobMutation();
     let { id } = useParams();
     const [initialValues, setInitialValues] = useState({
         company: '',
@@ -52,8 +53,9 @@ const EditJob = () => {
     });
 
     const handleSubmit = async (values) => {
-        try {
-            const result = await createJob({
+        if (id) {
+            try {
+                const result = await modifyJob(id, {
                 company: values.company,
                 position: values.position,
                 description: values.description,
@@ -62,11 +64,28 @@ const EditJob = () => {
                 type: values.type,
                 city: values.city,
                 homeOffice: values.homeOffice,
-            }).unwrap();
-            // navigate(`/job/${result.id}`, {replace: true});
-            console.log("result: ", result);
-        } catch (error) {
-            console.log("error: ", error);
+                }).unwrap();
+                console.log(result);
+            } catch (error) {
+                console.log("error: ", error);
+            }
+        } else {
+            try {
+                const result = await createJob({
+                    company: values.company,
+                    position: values.position,
+                    description: values.description,
+                    salaryFrom: values.salaryFrom,
+                    salaryTo: values.salaryTo,
+                    type: values.type,
+                    city: values.city,
+                    homeOffice: values.homeOffice,
+                }).unwrap();
+                // navigate(`/job/${result.id}`, {replace: true});
+                console.log("result: ", result);
+            } catch (error) {
+                console.log("error: ", error);
+            }
         }
     }
 

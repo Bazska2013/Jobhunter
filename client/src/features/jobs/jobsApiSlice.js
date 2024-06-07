@@ -48,8 +48,15 @@ export const jobsApiSlice = createApi({
                     method: "GET",
                 }
             }
+        }),
+        modifyJob: build.mutation({
+            query: (id, body) => ({
+                url: `jobs/${id}`,
+                method: "PATCH",
+                body,
+            })
         })
     })
 });
 
-export const { useCreateJobMutation, useAllJobsQuery, useFilterJobsQuery, useOneJobQuery } = jobsApiSlice;
+export const { useCreateJobMutation, useAllJobsQuery, useFilterJobsQuery, useOneJobQuery, useModifyJobMutation } = jobsApiSlice;

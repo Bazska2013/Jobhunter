@@ -3,8 +3,11 @@ import NavBar from "../components/NavBar.jsx";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useOneJobQuery } from "../features/jobs/jobsApiSlice.js";
+import { selectCurrentUser } from "../features/auth/authSlice.js";
+import { useSelector } from "react-redux";
 
 const JobListing = () => {
+    let user = useSelector(selectCurrentUser);
     let { id } = useParams();
 
     const [job, setJob] = useState({});
@@ -33,9 +36,15 @@ const JobListing = () => {
                         <h2>Cég részletei</h2>
                         <p>Megtetszett a lehetőség? Jelentkezz!</p>
                     </Col>
-                    <Col>
-                        <Button variant="primary">Jelentkezés</Button>
-                    </Col>
+                    {user.role === "company" ? (job.userId === user.id ? <>
+                        <Col>
+                            <Button variant="primary">Szerkesztés</Button>
+                        </Col>
+                    </> : <></>) : <>
+                        <Col>
+                            <Button variant="primary">Jelentkezés</Button>
+                        </Col>
+                    </>}
                 </Row>
                 <Table striped responsive>
                     <tbody>
