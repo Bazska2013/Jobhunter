@@ -1,11 +1,23 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Col, Container, Row, Table} from "react-bootstrap";
 import NavBar from "../../components/NavBar.jsx";
 import {useSelector} from "react-redux";
 import {selectCurrentUser} from "../../features/auth/authSlice.js";
+import {useJobsForAnApplicantQuery} from "../../features/jobs/applicantsApiSlice.js";
+import {useNavigate} from "react-router-dom";
 
 export const Profile = () => {
     let user = useSelector(selectCurrentUser);
+    const navigate = useNavigate();
+    const [jobs, setJobs] = useState([]);
+    const {data, isLoading, isError} = useJobsForAnApplicantQuery({userId: user.id});
+
+    useEffect(() => {
+        if (data && !isLoading && !isError) {
+            setJobs(data);
+        }
+    }, [data, isLoading, isError]);
+
     return (
         <div>
             <h1>Profilom</h1>
@@ -57,6 +69,28 @@ export const Profile = () => {
                         </tr>
                     </tbody>
                 </Table>
+                {jobs.length > 0 ? <>
+                    <Container>
+                        <Row>
+                            <Col>
+                                <h2>Jelentkezések</h2>
+                            </Col>
+                        </Row>
+                        {jobs.map((job) => (
+                            <Row key={job.jobId}>
+                                <Col>
+                                    <p>{job.job.company}</p>
+                                </Col>
+                                <Col>
+                                    <p>{job.job.position}</p>
+                                </Col>
+                                <Col>
+                                    <Button onClick={() => {navigate('/job/'+job.jobId)}} variant="outline-primary">Állás részletei</Button>
+                                </Col>
+                            </Row>
+                        ))}
+                    </Container>
+                </> : <></>}
             </Container>
         </div>
     )
