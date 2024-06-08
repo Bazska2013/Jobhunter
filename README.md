@@ -249,7 +249,7 @@ Az elkészült program beadása a Canvasen történik, és két dolgot kell ide 
 - [x] Főoldal: Az állásokra kattintva átvisz minket az alkalmazás az álláshirdetés részletező oldalára, ahol az ahhoz tartozó adatok jelennek meg (2pt)
 - [x] Regisztráció: A regisztráció működik (1pt)
 - [x] Regisztráció: A felhasználó munkavállalóként és munkáltatóként is regisztrálhat, különböző mezők jelennek meg a leendő fiók típusától függően (3pt)
-- [ ] Regisztráció: Munkavállaló regisztráció esetén a felhasználó meg tudja adni a tapasztalatait (2pt)
+- [x] Regisztráció: Munkavállaló regisztráció esetén a felhasználó meg tudja adni a tapasztalatait (2pt)
 - [x] Bejelentkezés: Bejelentkezés működik (1pt)
 - [x] Munkavállaló - Profilom: Látszódnak a munkavállaló adatai (név, email cím), és az oldalon kilistázza az előző munkahelyeket (1pt)
 - [x] Munkavállaló - Profilom: A korábban hozzáadott munkatapasztalatok szerkeszthetőek (1pt)

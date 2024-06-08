@@ -20,26 +20,9 @@ const ApplicantModal = (props) => {
                     <Col>{data.user ? data.user.fullname : 'Loading...'}</Col>
                     <Col>{data.user ? data.user.email : 'Loading...'}</Col>
                 </Row>
-                <Row>
-                    <Col>
-                        Korábbi tapasztalatok
-                    </Col>
-                </Row>
-                <Table striped responsive>
-                    <tbody>
-                        <tr>
-                            <td>
-                                Ettől eddig
-                            </td>
-                            <td>
-                                Munakör
-                            </td>
-                        </tr>
-                    </tbody>
-                </Table>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => {dispatch(hideApplicant())}}>
+                <Button variant="custom_secondary" onClick={() => {dispatch(hideApplicant())}}>
                     Bezárás
                 </Button>
             </Modal.Footer>

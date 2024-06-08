@@ -1,0 +1,52 @@
+.btn-custom_primary {
+    background-color: #f8c124;
+}
+
+.btn-custom_primary:hover {
+    background-color: #ddac25;
+}
+
+.btn-custom_danger {
+    color: white;
+    background-color: #8c7171;
+}
+
+.btn-custom_danger:hover {
+    color: white;
+    background-color: darkred;
+}
+
+.btn-custom_secondary {
+    color: white;
+    background-color: #b6b3b0;
+}
+
+.btn-custom_secondary:hover {
+    color: white;
+    background-color: #7c8c94;
+}
+
+.btn-custom_outline-primary {
+    border-color: #f8c124;
+}
+
+.btn-custom_outline-primary:hover {
+    background-color: #ddac25;
+    border-color: #ddac25;
+}
+
+.container {
+    /*border: 1px solid #f8c124;*/
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.navbar {
+    border: 1px solid #f8c124;
+    box-shadow: #ddac25 0 0 10px;
+    background-color: white;
+}
+
+body {
+    margin-top: 100px;
+}

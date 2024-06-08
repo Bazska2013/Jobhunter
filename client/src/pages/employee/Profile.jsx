@@ -50,7 +50,7 @@ export const Profile = () => {
                         <p>Adataid és tapasztalataid egy helyen</p>
                     </Col>
                     <Col style={{textAlign: 'right'}}>
-                        <Button onClick={() => {handleExperienceModal()}}>Tapasztalatok szerkesztése</Button>
+                        <Button variant="custom_primary" onClick={() => {handleExperienceModal()}}>Tapasztalatok szerkesztése</Button>
                     </Col>
                 </Row>
                 <Table striped responsive>
@@ -109,7 +109,7 @@ export const Profile = () => {
                                     <p>{job.job.position}</p>
                                 </Col>
                                 <Col>
-                                    <Button onClick={() => {navigate('/job/'+job.jobId)}} variant="outline-primary">Állás részletei</Button>
+                                    <Button onClick={() => {navigate('/job/'+job.jobId)}} variant="custom_outline-primary">Állás részletei</Button>
                                 </Col>
                             </Row>
                         ))}

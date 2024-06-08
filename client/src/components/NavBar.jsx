@@ -23,7 +23,7 @@ const NavBar = () => {
         dispatch(show());
     }
     return (
-        <Navbar>
+        <Navbar expand="lg" fixed="top">
             <Container>
                 <Navbar.Brand onClick={() => navigate("/")}>
                     <img
@@ -36,7 +36,7 @@ const NavBar = () => {
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
+                    <Nav className="me-auto" variant="underline">
                         {user ? ( <>
                             <Nav.Link onClick={() => navigate("/")}>Álláshirdetések</Nav.Link>
                             <Nav.Link onClick={() => navigate("/profile")}>Profilom</Nav.Link>

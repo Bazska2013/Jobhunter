@@ -175,11 +175,11 @@ const Register = () => {
                         </Form.Group>
                         {userType ? <></> : <>
                             <Button
-                                variant="outline-primary"
+                                variant="custom_outline-primary"
                                 onClick={() => dispatch(showNewExperiences())}
                             >Tapasztalatok hozzáadása</Button>
                         </>}
-                        <Button variant="primary" type="submit">
+                        <Button variant="custom_primary" type="submit">
                             Regisztráció
                         </Button>
                     </Form>

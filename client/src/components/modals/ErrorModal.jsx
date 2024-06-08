@@ -20,7 +20,7 @@ const ErrorModal = (props) => {
             </Modal.Header>
             <Modal.Body>{errorMessage}</Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={onClose}>
+                <Button variant="custom_secondary" onClick={onClose}>
                     Bezárás
                 </Button>
             </Modal.Footer>

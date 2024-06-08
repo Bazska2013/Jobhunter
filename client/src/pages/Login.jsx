@@ -83,7 +83,7 @@ const Login = () => {
                                 {errors.password}
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Button variant="primary" type="submit">
+                        <Button variant="custom_primary" type="submit">
                             Bejelentkezés
                         </Button>
                     </Form>

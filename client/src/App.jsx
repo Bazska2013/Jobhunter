@@ -9,6 +9,7 @@ import JobListing from "./pages/JobListing.jsx";
 import NoMatch from "./components/NoMatch.jsx";
 import {RequireCompany} from "./features/auth/RequireCompany.jsx";
 import {UserTypeProfile} from "./features/auth/UserTypeProfile.jsx";
+import "./App.css";
 
 function App() {
   return (

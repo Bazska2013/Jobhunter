@@ -129,8 +129,8 @@ const Home = () => {
                         <Form.Control type="text" value={search.city} onChange={(e) => {handleSearchChange("city", e.target.value)}} />
                     </Form.Group>
                     <Form.Check id="home_office" value={search.homeOffice} type="checkbox" label="Home Office" onChange={(e) => {handleSearchChange("homeOffice", e.target.value)}} />
-                    <Button variant="primary" onClick={handleSend}>Keresés</Button>
-                    <Button variant="danger" onClick={handleFilterDelete}>Szűrők törlése</Button>
+                    <Button variant="custom_primary" onClick={handleSend}>Keresés</Button>
+                    <Button variant="custom_danger" onClick={handleFilterDelete}>Szűrők törlése</Button>
                 </Offcanvas.Body>
             </Offcanvas>
             <Container>
@@ -145,7 +145,7 @@ const Home = () => {
                         <Form.Control type="text" placeholder="Keresés" onChange={(e) => {handleSearchChange("company", e.target.value)}} />
                     </Col>
                     <Col>
-                        <Button variant="primary" onClick={handleSend}>Keresés</Button>
+                        <Button variant="custom_primary" onClick={handleSend}>Keresés</Button>
                         {user && <Button variant="light" onClick={() => {setShow(true)}}>Szűrés</Button>}
                     </Col>
                 </Row>
@@ -159,11 +159,11 @@ const Home = () => {
                             <Card.Body>
                                 <Card.Title>Hiba</Card.Title>
                                 <Card.Text>Hiba történt az adatok betöltése során. Kattintson az Újrapróbálkozás gombra az adatok újbóli lekéréséhez.</Card.Text>
-                                <Button variant="primary" onClick={() => {navigate(0)}}>Újrapróbálkozás</Button>
+                                <Button variant="custom_primary" onClick={() => {navigate(0)}}>Újrapróbálkozás</Button>
                             </Card.Body>
                         </Card>
                     </> : <>
-                        <Table>
+                        <Table hover>
                             <thead>
                                 <tr>
                                     <th>ÁLLÁS NEVE</th>

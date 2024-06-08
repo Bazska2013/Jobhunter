@@ -13,7 +13,7 @@ const SuccessModal = (props) => {
             </Modal.Header>
             <Modal.Body>{message}</Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => {dispatch(hide())}}>
+                <Button variant="custom_secondary" onClick={() => {dispatch(hide())}}>
                     Bezárás
                 </Button>
             </Modal.Footer>

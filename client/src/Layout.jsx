@@ -12,7 +12,7 @@ export const Layout = () => {
             <SuccessModal />
             <ApplicantModal />
             <NavBar/>
-            <Outlet/>
+            <Outlet />
         </Container>
     );
 };

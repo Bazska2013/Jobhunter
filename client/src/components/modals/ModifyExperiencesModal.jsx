@@ -50,7 +50,7 @@ const ModifyExperiencesModal = (props) => {
                 <AddExperienceToRegistered onMutation={props.onMutation} onAdd={handleAdd} />
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => {dispatch(hideModifyExperiences())}}>
+                <Button variant="custom_secondary" onClick={() => {dispatch(hideModifyExperiences())}}>
                     Bezárás
                 </Button>
             </Modal.Footer>

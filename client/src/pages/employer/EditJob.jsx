@@ -214,7 +214,7 @@ const EditJob = () => {
                             value={values.homeOffice}
                             onChange={handleChange}
                         />
-                        <Button variant="primary" type="submit">
+                        <Button variant="custom_primary" type="submit">
                             Létrehozás
                         </Button>
                     </Form>

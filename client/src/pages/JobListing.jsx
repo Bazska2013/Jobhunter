@@ -90,14 +90,14 @@ const JobListing = () => {
                     </Col>
                     {user.role === "company" ? (job.userId === user.id ? <>
                         <Col>
-                            <Button variant="primary" onClick={() => {navigate('/editjob/'+id)}} >Szerkesztés</Button>
+                            <Button variant="custom_primary" onClick={() => {navigate('/editjob/'+id)}} >Szerkesztés</Button>
                         </Col>
                     </> : <></>) : <>
                         <Col>
                             {alreadyApplied ? <>
-                                <Button variant="primary" onClick={() => {handleRemoveApply()}}>Jelentkezés visszavonása</Button>
+                                <Button variant="custom_primary" onClick={() => {handleRemoveApply()}}>Jelentkezés visszavonása</Button>
                             </> : <>
-                                <Button variant="primary" onClick={() => {handleApply()}}>Jelentkezés</Button>
+                                <Button variant="custom_primary" onClick={() => {handleApply()}}>Jelentkezés</Button>
                             </>}
                         </Col>
                     </>}

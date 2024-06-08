@@ -37,7 +37,7 @@ const Applicants = ({id}) => {
                             <p>{applicant.user.email}</p>
                         </Col>
                         <Col>
-                            <Button onClick={() => {handleApplicantProfile(applicant)}} variant="outline-primary">Jelentkező profilja</Button>
+                            <Button onClick={() => {handleApplicantProfile(applicant)}} variant="custom_outline-primary">Jelentkező profilja</Button>
                         </Col>
                     </Row>
                 ))}

@@ -38,7 +38,7 @@ export const Profile = () => {
                         <Col>
                             <Button variant="light" onClick={() => {navigate('/editjob/'+job.id)}} >Szerkesztés</Button>
                             <Button variant="light" onClick={() => {navigate('/job/'+job.id)}}>Megtekintés</Button>
-                            <Button variant="danger" onClick={() => {handleDelete(job.id)}}>Törlés</Button>
+                            <Button variant="custom_danger" onClick={() => {handleDelete(job.id)}}>Törlés</Button>
                         </Col>
                     </Row>
                     <Row>
@@ -51,7 +51,7 @@ export const Profile = () => {
                     </Row>
                 </Container>
             ))}
-            <Button variant="primary" onClick={() => {navigate('/newjob')}} >Hirdetés hozzáadása</Button>
+            <Button variant="custom_primary" onClick={() => {navigate('/newjob')}} >Hirdetés hozzáadása</Button>
         </div>
     )
 }
