@@ -26,28 +26,37 @@ export const Profile = () => {
 
     return (
         <div>
-            <Container>
+            <Container style={{border: "#f8c124 1px solid", marginBottom: "20px", borderRadius: "10px", boxShadow: "#ddac25 0 0 10px"}}>
                 <h1>Profilom</h1>
             </Container>
             {Array.isArray(jobs) && jobs.map((job) => (
-                <Container key={job.id} >
+                <Container key={job.id} style={{border: "#f8c124 1px solid", marginBottom: "20px", borderRadius: "10px", boxShadow: "#ddac25 0 0 10px"}} >
                     <Row>
-                        <Col>
+                        <Col xs={6}>
                             <h2>{job.position}</h2>
                         </Col>
                         <Col>
-                            <Button variant="light" onClick={() => {navigate('/editjob/'+job.id)}} >Szerkesztés</Button>
-                            <Button variant="light" onClick={() => {navigate('/job/'+job.id)}}>Megtekintés</Button>
-                            <Button variant="custom_danger" onClick={() => {handleDelete(job.id)}}>Törlés</Button>
+                            <span>{job.type === "full-time" ? "Teljes állás" : (job.type === "part-time" ? "Részmunkaidő" : "Gyakornoki")}</span>
+                        </Col>
+                        <Col>
+                            <span>{job.homeOffice === 0 ? "Nincs Home Office" : "Van Home Office"}</span>
+                        </Col>
+                        <Col>
+                            <span>{job.salaryFrom}-{job.salaryTo} Ft.</span>
                         </Col>
                     </Row>
                     <Row>
-                        <Col>
-                        <span>{job.type}</span>
-                        <span>{job.homeOffice}</span>
-                        <span>{job.salaryFrom}-{job.salaryTo} Ft.</span>
-                        <span>Closing on January 9. 20:20</span>
-                        </Col>
+                        <Row style={{textAlign: "center"}}>
+                            <Col xs>
+                                <Button variant="light" onClick={() => {navigate('/editjob/'+job.id)}} >Szerkesztés</Button>
+                            </Col>
+                            <Col xs>
+                                <Button variant="light" onClick={() => {navigate('/job/'+job.id)}}>Megtekintés</Button>
+                            </Col>
+                            <Col xs>
+                                <Button variant="custom_danger" onClick={() => {handleDelete(job.id)}}>Törlés</Button>
+                            </Col>
+                        </Row>
                     </Row>
                 </Container>
             ))}

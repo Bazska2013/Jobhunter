@@ -78,7 +78,7 @@ const NewExperiencesModal = (props) => {
             <Modal.Footer>
                 {errors && errors}
                 <Button
-                    variant="primary"
+                    variant="custom_primary"
                     onClick={() => {handleSave()}}
                 >Mentés</Button>
             </Modal.Footer>

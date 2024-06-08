@@ -108,15 +108,15 @@ const Home = () => {
                     <Offcanvas.Title>Szűrés</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                    <Form.Group>
+                    <Form.Group style={{marginTop: "20px"}}>
                         <Form.Label>Fizetési sáv alja</Form.Label>
                         <Form.Control type="number" value={search.salaryFrom} onChange={(e) => {handleSearchChange("salaryFrom", e.target.value)}} />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group style={{marginTop: "20px"}}>
                         <Form.Label>Fizetési sáv teteje</Form.Label>
                         <Form.Control type="number" value={search.salaryTo} onChange={(e) => {handleSearchChange("salaryTo", e.target.value)}} />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group style={{marginTop: "20px"}}>
                         <Form.Label>Foglalkoztatás típusa</Form.Label>
                         <Form.Select aria-label="Foglalkoztatás formája" value={search.type} onChange={(e) => {handleSearchChange("type", e.target.value)}}>
                             <option value="full-time">Teljes állás (full-time)</option>
@@ -124,30 +124,37 @@ const Home = () => {
                             <option value="internship">Gyakornoki (internship)</option>
                         </Form.Select>
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group style={{marginTop: "20px"}}>
                         <Form.Label>Település</Form.Label>
                         <Form.Control type="text" value={search.city} onChange={(e) => {handleSearchChange("city", e.target.value)}} />
                     </Form.Group>
-                    <Form.Check id="home_office" value={search.homeOffice} type="checkbox" label="Home Office" onChange={(e) => {handleSearchChange("homeOffice", e.target.value)}} />
-                    <Button variant="custom_primary" onClick={handleSend}>Keresés</Button>
-                    <Button variant="custom_danger" onClick={handleFilterDelete}>Szűrők törlése</Button>
+                    <Form.Check style={{marginTop: "20px"}} id="home_office" value={!search.homeOffice} type="checkbox" label="Home Office lehetőség" onChange={(e) => {handleSearchChange("homeOffice", e.target.value)}} />
+                    <Row style={{textAlign: "center", marginTop: "20px"}}>
+                        <Col>
+                            <Button variant="custom_primary" onClick={handleSend}>Keresés</Button>
+                        </Col>
+                        <Col>
+                            <Button variant="custom_danger" onClick={handleFilterDelete}>Szűrők törlése</Button>
+                        </Col>
+                    </Row>
                 </Offcanvas.Body>
             </Offcanvas>
-            <Container>
-                <h1>Főoldal</h1>
-            </Container>
-            <Container>
+            <Container style={{border: "#f8c124 1px solid", marginBottom: "20px", borderRadius: "10px", boxShadow: "#ddac25 0 0 10px"}}>
                 <Row>
-                    <h2>Böngéssz az állások között:</h2>
+                    <h1>Böngéssz az állások között:</h1>
                 </Row>
                 <Row>
-                    <Col>
+                    <Col sm={8}>
                         <Form.Control type="text" placeholder="Keresés" onChange={(e) => {handleSearchChange("company", e.target.value)}} />
                     </Col>
-                    <Col>
+                    <Col style={{textAlign: "center"}}>
                         <Button variant="custom_primary" onClick={handleSend}>Keresés</Button>
-                        {user && <Button variant="light" onClick={() => {setShow(true)}}>Szűrés</Button>}
                     </Col>
+                    {user && <>
+                        <Col style={{textAlign: "center"}}>
+                            <Button variant="light" onClick={() => {setShow(true)}}>Szűrés</Button>
+                        </Col>
+                    </>}
                 </Row>
             </Container>
                     {isLoading === true ? <>
@@ -163,28 +170,33 @@ const Home = () => {
                             </Card.Body>
                         </Card>
                     </> : <>
-                        <Table hover>
-                            <thead>
-                                <tr>
-                                    <th>ÁLLÁS NEVE</th>
-                                    <th>BÉREZÉS</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {Array.isArray(jobs) && jobs.map((job) => (
-                                    <tr key={job.id} onClick={() => {navigate('/job/'+job.id)}}>
-                                        <td>
-                                            <p>{job.company}</p>
-                                            <p>{job.city}</p>
-                                        </td>
-                                        <td>
-                                            <p>{job.salaryFrom}-{job.salaryTo} Ft.</p>
-                                            <p>{job.type}</p>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </Table>
+                            <Container style={{border: "#f8c124 1px solid", marginBottom: "20px", borderRadius: "10px", boxShadow: "#ddac25 0 0 10px"}}>
+                                <Row>
+                                    <Table style={{marginTop: "20px"}} hover>
+                                        <thead>
+                                        <tr>
+                                            <th>ÁLLÁS</th>
+                                            <th>BÉREZÉS</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {Array.isArray(jobs) && jobs.map((job) => (
+                                            <tr key={job.id} onClick={() => {navigate('/job/'+job.id)}}>
+                                                <td>
+                                                    <h3>{job.company}</h3>
+                                                    <p>{job.city}</p>
+                                                </td>
+                                                <td>
+                                                    <h3>{job.salaryFrom}-{job.salaryTo} Ft.</h3>
+                                                    <p>{job.type === "full-time" ? "Teljes állás" : (job.type === "part-time" ? "Részmunkaidő" : "Gyakornoki")}</p>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                        </tbody>
+                                    </Table>
+                                </Row>
+                            </Container>
+
                         </>
                     )}
         </>

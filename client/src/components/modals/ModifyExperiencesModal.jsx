@@ -39,7 +39,7 @@ const ModifyExperiencesModal = (props) => {
     }
 
     return (
-        <Modal size="xl" centered show={show} onHide={() => {dispatch(hideModifyExperiences())}}>
+        <Modal size="xl" scrollable centered show={show} onHide={() => {dispatch(hideModifyExperiences())}}>
             <Modal.Header closeButton>
                 <Modal.Title>Tapasztalatok szerkesztése</Modal.Title>
             </Modal.Header>

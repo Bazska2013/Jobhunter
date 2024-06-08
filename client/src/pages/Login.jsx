@@ -1,4 +1,4 @@
-import {Button, Form} from "react-bootstrap";
+import {Button, Container, Form} from "react-bootstrap";
 import {useDispatch} from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import NavBar from "../components/NavBar.jsx";
@@ -44,51 +44,53 @@ const Login = () => {
     return (
         <>
             <ErrorModal error={errors} onClose={() => setErrors('')} />
-            <Formik
-                validationSchema={schema}
-                initialValues={{
-                    email: '',
-                    password: '',
-                }}
-                onSubmit={ values => {
-                    handleSubmit(values);
-                }}
-            >
-                {({handleSubmit, handleChange, values, errors}) => (
-                    <Form noValidate onSubmit={handleSubmit}>
-                        <Form.Group className="mb-3" controlId="email">
-                            <Form.Label>Email cím</Form.Label>
-                            <Form.Control
-                                type="email"
-                                placeholder="example@example.com"
-                                name="email"
-                                value={values.email}
-                                onChange={handleChange}
-                                isInvalid={!!errors.email}
-                            />
-                            <Form.Control.Feedback type="invalid" >
-                                {errors.email}
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="password">
-                            <Form.Label>Jelszó</Form.Label>
-                            <Form.Control
-                                type="password"
-                                name="password"
-                                value={values.password}
-                                onChange={handleChange}
-                                isInvalid={!!errors.password}
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {errors.password}
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Button variant="custom_primary" type="submit">
-                            Bejelentkezés
-                        </Button>
-                    </Form>
-                )}
-            </Formik>
+            <Container style={{border: "#f8c124 1px solid", marginBottom: "20px", borderRadius: "10px", boxShadow: "#ddac25 0 0 10px"}}>
+                <Formik
+                    validationSchema={schema}
+                    initialValues={{
+                        email: '',
+                        password: '',
+                    }}
+                    onSubmit={ values => {
+                        handleSubmit(values);
+                    }}
+                >
+                    {({handleSubmit, handleChange, values, errors}) => (
+                        <Form noValidate onSubmit={handleSubmit}>
+                            <Form.Group style={{marginTop: "10px"}} className="mb-3" controlId="email">
+                                <Form.Label>Email cím</Form.Label>
+                                <Form.Control
+                                    type="email"
+                                    placeholder="example@example.com"
+                                    name="email"
+                                    value={values.email}
+                                    onChange={handleChange}
+                                    isInvalid={!!errors.email}
+                                />
+                                <Form.Control.Feedback type="invalid" >
+                                    {errors.email}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group style={{marginTop: "10px"}} className="mb-3" controlId="password">
+                                <Form.Label>Jelszó</Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    name="password"
+                                    value={values.password}
+                                    onChange={handleChange}
+                                    isInvalid={!!errors.password}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.password}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Button style={{marginTop: "10px"}} variant="custom_primary" type="submit">
+                                Bejelentkezés
+                            </Button>
+                        </Form>
+                    )}
+                </Formik>
+            </Container>
         </>
     );
 }

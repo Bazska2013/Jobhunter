@@ -37,8 +37,16 @@
 
 .container {
     /*border: 1px solid #f8c124;*/
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     padding: 20px;
+}
+
+.row {
+    /*border: 1px solid #f8c124;*/
+}
+
+.col {
+    /*border: 1px solid #f8c124;*/
 }
 
 .navbar {
@@ -48,5 +56,5 @@
 }
 
 body {
-    margin-top: 100px;
+    margin-top: 120px;
 }

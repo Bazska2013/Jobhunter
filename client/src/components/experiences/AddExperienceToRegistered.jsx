@@ -56,7 +56,7 @@ const AddExperienceToRegistered = (props) => {
         <>
             {newExperience === null ? <>
                 <Button
-                    style={{backgroundImage:`url(${plus})`,backgroundSize:"cover", width:"40px", height:"40px"}}
+                    style={{backgroundImage:`url(${plus})`,backgroundSize:"cover", width:"40px", height:"40px", marginTop: "10px"}}
                     onClick={() => {
                     setNewExperience({
                                          company: '',

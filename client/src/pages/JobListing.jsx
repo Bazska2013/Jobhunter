@@ -74,26 +74,28 @@ const JobListing = () => {
 
     return (
         <>
-            <Container>
-                <h1>{job.company}</h1>
-                <p>Home Office: {job.homeOffice}</p>
-                <div>
-                    <p>{job.salaryFrom}-{job.salaryTo} Ft.</p>
-                    <p>{job.type}</p>
-                </div>
+            <Container style={{border: "#f8c124 1px solid", marginBottom: "20px", borderRadius: "10px", boxShadow: "#ddac25 0 0 10px"}}>
+                <Row><h1>{job.company}</h1></Row>
+                <Row><p>Home Office: {job.homeOffice === 0 ? "Nincs" : "Van"}</p></Row>
+                <Row><p>{job.salaryFrom}-{job.salaryTo} Ft.</p></Row>
+                <Row><p>{job.type === "full-time" ? "Teljes állás" : (job.type === "part-time" ? "Részmunkaidő" : "Gyakornoki")}</p></Row>
             </Container>
-            <Container>
+            <Container style={{border: "#f8c124 1px solid", marginBottom: "20px", borderRadius: "10px", boxShadow: "#ddac25 0 0 10px"}}>
                 <Row>
                     <Col>
-                        <h2>Cég részletei</h2>
-                        <p>Megtetszett a lehetőség? Jelentkezz!</p>
+                        <Row>
+                            <h2>Cég részletei</h2>
+                        </Row>
+                        <Row>
+                            <p>Megtetszett a lehetőség? Jelentkezz!</p>
+                        </Row>
                     </Col>
                     {user.role === "company" ? (job.userId === user.id ? <>
-                        <Col>
+                        <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <Button variant="custom_primary" onClick={() => {navigate('/editjob/'+id)}} >Szerkesztés</Button>
                         </Col>
                     </> : <></>) : <>
-                        <Col>
+                        <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             {alreadyApplied ? <>
                                 <Button variant="custom_primary" onClick={() => {handleRemoveApply()}}>Jelentkezés visszavonása</Button>
                             </> : <>
@@ -102,8 +104,9 @@ const JobListing = () => {
                         </Col>
                     </>}
                 </Row>
-                <Table striped responsive>
-                    <tbody>
+                <Row>
+                    <Table style={{marginTop: "20px"}} striped responsive>
+                        <tbody>
                         <tr>
                             <td>Név</td>
                             <td>{job.company}</td>
@@ -122,7 +125,7 @@ const JobListing = () => {
                         </tr>
                         <tr>
                             <td>Foglalkoztatás típusa</td>
-                            <td>{job.type}</td>
+                            <td>{job.type === "full-time" ? "Teljes állás" : (job.type === "part-time" ? "Részmunkaidő" : "Gyakornoki")}</td>
                         </tr>
                         <tr>
                             <td>Telephely</td>
@@ -130,10 +133,11 @@ const JobListing = () => {
                         </tr>
                         <tr>
                             <td>Home Office</td>
-                            <td>{job.homeOffice}</td>
+                            <td>{job.homeOffice === 0 ? "Nincs" : "Van"}</td>
                         </tr>
-                    </tbody>
-                </Table>
+                        </tbody>
+                    </Table>
+                </Row>
             </Container>
             {user.role === "company" && job.userId === user.id ? <Applicants id={id} />: <></>}
         </>
