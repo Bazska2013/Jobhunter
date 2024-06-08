@@ -25,4 +25,5 @@ const ShowNewExperiencesModalSlice = createSlice({
 export const {showNewExperiences, hideNewExperiences, setExperienceData, getExperienceData} = ShowNewExperiencesModalSlice.actions;
 export const selectShowNewExperiencesModal = (state) => state.showNewExperiencesModal.show;
 export const showNewExperiencesModalReducer = ShowNewExperiencesModalSlice.reducer;
+export const selectExperienceData = (state) => state.showNewExperiencesModal.data;
 export default ShowNewExperiencesModalSlice;

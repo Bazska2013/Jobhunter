@@ -11,7 +11,7 @@ import ErrorModal from "../components/modals/ErrorModal.jsx";
 import {setSuccessMessage, show} from "../features/modals/showModalSlice.js";
 import NewExperiencesModal from "../components/modals/NewExperiencesModal.jsx";
 import {
-    getExperienceData,
+    getExperienceData, selectExperienceData,
     setExperienceData,
     showNewExperiences
 } from "../features/modals/showNewExperiencesModalSlice.js";
@@ -25,6 +25,7 @@ const Register = () => {
     const [authLogin] = useLoginMutation();
     const [addExperiences] = useAddExperiencesMutation();
     const [errors, setErrors] = useState('');
+    const experienceData = useSelector(state => state.showNewExperiencesModal.data);
 
     const schema = yup.object().shape({
         email: yup.string().email("Helytelen formátum").required("Email cím megadása kötelező"),
@@ -48,20 +49,22 @@ const Register = () => {
                     strategy: 'local',
                 }).unwrap();
                 dispatch(login(loginResult));
+                if (!userType) {
+                    if (experienceData) {
+                        try {
+                            await handleSendNewExperiences(experienceData);
+                            dispatch(setExperienceData(null));
+                        } catch (error) {
+                            console.error(error);
+                        }
+                    }
+                }
+                dispatch(setSuccessMessage("Sikeres regisztráció"));
+                dispatch(show())
+                navigate('/', {replace: true});
             } catch (error) {
                 console.error(error);
             }
-            await authLogin({
-                email: values.email,
-                password: values.password1,
-                strategy: 'local',
-            })
-            if (!userType) {
-                await handleSendNewExperiences(dispatch(getExperienceData()));
-            }
-            dispatch(setSuccessMessage("Sikeres regisztráció"));
-            dispatch(show())
-            navigate('/', {replace: true});
         } catch (error) {
             console.error(error);
             setErrors(error.status.toString());

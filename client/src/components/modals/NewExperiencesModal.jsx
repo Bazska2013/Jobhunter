@@ -5,9 +5,10 @@ import {useEffect, useState} from "react";
 
 const NewExperiencesModal = (props) => {
     const dispatch = useDispatch();
-    let show =useSelector(state => state.showNewExperiencesModal.show);
-    let data = useSelector(state => state.showNewExperiencesModal.data);
+    let show = useSelector(state => state.showNewExperiencesModal?.show);
+    let data = useSelector(state => state.showNewExperiencesModal?.data);
     const [experiencesJSON, setExperiencesJSON] = useState('');
+    const [errors, setErrors] = useState('');
 
     useEffect(() => {
         if (data) {
@@ -18,14 +19,25 @@ const NewExperiencesModal = (props) => {
     }, [data]);
 
     const handleSave = () => {
+        setErrors('');
         const experiences = experiencesJSON.split('\n');
         const exps = [];
         for (let i = 0; i < experiences.length; i++) {
             const exp = experiences[i].split(';');
+            if (exp.length !== 3) {
+                setErrors('Hibás formátum!');
+                return;
+            }
+            const [company, title, interval] = exp;
+            const [startYear] = interval.split('-');
+            if (!company || !title || !startYear) {
+                setErrors('Hibás formátum!');
+                return;
+            }
             exps.push({
-                company: exp[0],
-                title: exp[1],
-                interval: exp[2]
+                company,
+                title,
+                interval,
             });
         }
         dispatch(setExperienceData(exps));
@@ -64,6 +76,7 @@ const NewExperiencesModal = (props) => {
                 </Row>
             </Modal.Body>
             <Modal.Footer>
+                {errors && errors}
                 <Button
                     variant="primary"
                     onClick={() => {handleSave()}}
