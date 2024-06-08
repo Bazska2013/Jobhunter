@@ -6,7 +6,7 @@ import Register from "./pages/Register.jsx";
 import {RequireAuth} from "./features/auth/RequireAuth.jsx";
 import EditJob from "./pages/employer/EditJob.jsx";
 import JobListing from "./pages/JobListing.jsx";
-import NoMatch from "./pages/NoMatch.jsx";
+import NoMatch from "./components/NoMatch.jsx";
 import {RequireCompany} from "./features/auth/RequireCompany.jsx";
 import {UserTypeProfile} from "./features/auth/UserTypeProfile.jsx";
 

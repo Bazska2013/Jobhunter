@@ -6,8 +6,8 @@ import check from "../../assets/check.svg";
 import close from "../../assets/close.svg";
 import close_red from "../../assets/close_red.svg";
 import edit from "../../assets/edit.svg";
-import ModifyExperience from "../ModifyExperience.jsx";
-import AddExperienceToRegistered from "../AddExperienceToRegistered.jsx";
+import ModifyExperience from "../experiences/ModifyExperience.jsx";
+import AddExperienceToRegistered from "../experiences/AddExperienceToRegistered.jsx";
 
 const ModifyExperiencesModal = (props) => {
     const dispatch = useDispatch();

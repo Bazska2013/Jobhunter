@@ -7,6 +7,7 @@ import {applicantsApiSlice} from "./features/jobs/applicantsApiSlice.js";
 import {showApplicantModalReducer} from "./features/modals/showApplicantModalSlice.js";
 import {experiencesApiSlice} from "./features/jobs/experiencesApiSlice.js";
 import {showModifyExperiencesModalReducer} from "./features/modals/showModifyExperiencesModalSlice.js";
+import {showNewExperiencesModalReducer} from "./features/modals/showNewExperiencesModalSlice.js";
 
 export default configureStore({
     reducer: {
@@ -14,6 +15,7 @@ export default configureStore({
         showModal: showModalReducer,
         showApplicantModal: showApplicantModalReducer,
         showModifyExperiencesModal: showModifyExperiencesModalReducer,
+        showNewExperiencesModal: showNewExperiencesModalReducer,
         [authApiSlice.reducerPath]: authApiSlice.reducer,
         [jobsApiSlice.reducerPath]: jobsApiSlice.reducer,
         [applicantsApiSlice.reducerPath]: applicantsApiSlice.reducer,

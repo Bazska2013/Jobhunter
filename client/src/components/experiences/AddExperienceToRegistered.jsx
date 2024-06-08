@@ -1,9 +1,9 @@
 import {useState} from "react";
 import {Button, Form, InputGroup} from "react-bootstrap";
-import check from "../assets/check.svg";
-import close from "../assets/close.svg";
-import plus from "../assets/plus.svg";
-import {useAddExperiencesMutation} from "../features/jobs/experiencesApiSlice.js";
+import check from "../../assets/check.svg";
+import close from "../../assets/close.svg";
+import plus from "../../assets/plus.svg";
+import {useAddExperiencesMutation} from "../../features/jobs/experiencesApiSlice.js";
 
 const AddExperienceToRegistered = (props) => {
     const [newExperience, setNewExperience] = useState(null);

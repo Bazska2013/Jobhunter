@@ -4,17 +4,26 @@ import NavBar from "../components/NavBar.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import * as yup from "yup";
-import {useRegisterMutation} from "../features/auth/authApiSlice.js";
+import {useLoginMutation, useRegisterMutation} from "../features/auth/authApiSlice.js";
 import {login} from "../features/auth/authSlice.js";
 import {Formik} from "formik";
 import ErrorModal from "../components/modals/ErrorModal.jsx";
 import {setSuccessMessage, show} from "../features/modals/showModalSlice.js";
+import NewExperiencesModal from "../components/modals/NewExperiencesModal.jsx";
+import {
+    getExperienceData,
+    setExperienceData,
+    showNewExperiences
+} from "../features/modals/showNewExperiencesModalSlice.js";
+import {useAddExperiencesMutation} from "../features/jobs/experiencesApiSlice.js";
 
 const Register = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [userType, setUserType] = useState(false);
     const [authRegister] = useRegisterMutation();
+    const [authLogin] = useLoginMutation();
+    const [addExperiences] = useAddExperiencesMutation();
     const [errors, setErrors] = useState('');
 
     const schema = yup.object().shape({
@@ -32,22 +41,46 @@ const Register = () => {
                 fullname: values.name,
                 role: userType ? 'company' : 'jobseeker',
             }).unwrap();
-            dispatch(login({
-                email: result.email,
-                password: result.password,
+            try {
+                const loginResult = await authLogin({
+                    email: values.email,
+                    password: values.password1,
+                    strategy: 'local',
+                }).unwrap();
+                dispatch(login(loginResult));
+            } catch (error) {
+                console.error(error);
+            }
+            await authLogin({
+                email: values.email,
+                password: values.password1,
                 strategy: 'local',
-            }));
+            })
+            if (!userType) {
+                await handleSendNewExperiences(dispatch(getExperienceData()));
+            }
             dispatch(setSuccessMessage("Sikeres regisztráció"));
             dispatch(show())
-            navigate('/login', {replace: true});
+            navigate('/', {replace: true});
         } catch (error) {
             console.error(error);
             setErrors(error.status.toString());
         }
     }
 
+    const handleSendNewExperiences = async (values) => {
+        try {
+            const result = await addExperiences(values).unwrap();
+            console.log(result);
+            dispatch(setExperienceData(null));
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <>
+            <NewExperiencesModal />
             <ErrorModal error={errors} onClose={() => setErrors('')} />
             <Formik
                 validationSchema={schema}
@@ -137,6 +170,12 @@ const Register = () => {
                                 {errors.name}
                             </Form.Control.Feedback>
                         </Form.Group>
+                        {userType ? <></> : <>
+                            <Button
+                                variant="outline-primary"
+                                onClick={() => dispatch(showNewExperiences())}
+                            >Tapasztalatok hozzáadása</Button>
+                        </>}
                         <Button variant="primary" type="submit">
                             Regisztráció
                         </Button>

@@ -1,7 +1,7 @@
 import {selectCurrentUser} from "./authSlice.js";
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import NoMatch from "../../pages/NoMatch.jsx";
+import NoMatch from "../../components/NoMatch.jsx";
 
 export const RequireCompany = ({children}) => {
     let user = useSelector(selectCurrentUser);

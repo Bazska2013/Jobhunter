@@ -1,10 +1,10 @@
 import {Button, Form, InputGroup} from "react-bootstrap";
-import check from "../assets/check.svg";
-import close from "../assets/close.svg";
-import edit from "../assets/edit.svg";
-import close_red from "../assets/close_red.svg";
+import check from "../../assets/check.svg";
+import close from "../../assets/close.svg";
+import edit from "../../assets/edit.svg";
+import close_red from "../../assets/close_red.svg";
 import {useState} from "react";
-import {useDeleteExperienceMutation, useModifyExperienceMutation} from "../features/jobs/experiencesApiSlice.js";
+import {useDeleteExperienceMutation, useModifyExperienceMutation} from "../../features/jobs/experiencesApiSlice.js";
 
 const ModifyExperience = (props) => {
     const [selected, setSelected] = useState(false);
