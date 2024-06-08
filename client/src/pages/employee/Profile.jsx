@@ -1,22 +1,38 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Col, Container, Row, Table} from "react-bootstrap";
 import NavBar from "../../components/NavBar.jsx";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {selectCurrentUser} from "../../features/auth/authSlice.js";
 import {useJobsForAnApplicantQuery} from "../../features/jobs/applicantsApiSlice.js";
 import {useNavigate} from "react-router-dom";
+import {setData, showModifyExperiences} from "../../features/modals/showModifyExperiencesModalSlice.js";
+import {useGetExperiencesQuery} from "../../features/jobs/experiencesApiSlice.js";
 
 export const Profile = () => {
     let user = useSelector(selectCurrentUser);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [jobs, setJobs] = useState([]);
+    const [experiences, setExperiences] = useState([]);
     const {data, isLoading, isError} = useJobsForAnApplicantQuery({userId: user.id});
+    const {data: experiencesData, isLoading: experiencesIsLoading, isError: experiencesIsError} = useGetExperiencesQuery();
 
     useEffect(() => {
         if (data && !isLoading && !isError) {
             setJobs(data);
         }
     }, [data, isLoading, isError]);
+
+    useEffect(() => {
+        if (experiencesData && !experiencesIsLoading && !experiencesIsError) {
+            setExperiences(experiencesData);
+        }
+    }, [experiencesData, experiencesIsLoading, experiencesIsError]);
+
+    const handleExperienceModal = () => {
+        dispatch(setData(experiences));
+        dispatch(showModifyExperiences());
+    }
 
     return (
         <div>
@@ -28,7 +44,7 @@ export const Profile = () => {
                         <p>Adataid és tapasztalataid egy helyen</p>
                     </Col>
                     <Col style={{textAlign: 'right'}}>
-                        <Button>Tapasztalatok szerkesztése</Button>
+                        <Button onClick={() => {handleExperienceModal()}}>Tapasztalatok szerkesztése</Button>
                     </Col>
                 </Row>
                 <Table striped responsive>

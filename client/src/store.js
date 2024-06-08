@@ -5,16 +5,20 @@ import {jobsApiSlice} from "./features/jobs/jobsApiSlice.js";
 import {showModalReducer} from "./features/modals/showModalSlice.js";
 import {applicantsApiSlice} from "./features/jobs/applicantsApiSlice.js";
 import {showApplicantModalReducer} from "./features/modals/showApplicantModalSlice.js";
+import {experiencesApiSlice} from "./features/jobs/experiencesApiSlice.js";
+import {showModifyExperiencesModalReducer} from "./features/modals/showModifyExperiencesModalSlice.js";
 
 export default configureStore({
     reducer: {
         auth: authReducer,
         showModal: showModalReducer,
         showApplicantModal: showApplicantModalReducer,
+        showModifyExperiencesModal: showModifyExperiencesModalReducer,
         [authApiSlice.reducerPath]: authApiSlice.reducer,
         [jobsApiSlice.reducerPath]: jobsApiSlice.reducer,
         [applicantsApiSlice.reducerPath]: applicantsApiSlice.reducer,
+        [experiencesApiSlice.reducerPath]: experiencesApiSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(authApiSlice.middleware, jobsApiSlice.middleware, applicantsApiSlice.middleware),
+        getDefaultMiddleware().concat(authApiSlice.middleware, jobsApiSlice.middleware, applicantsApiSlice.middleware, experiencesApiSlice.middleware),
 });
