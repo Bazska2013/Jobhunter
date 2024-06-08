@@ -7,6 +7,7 @@ import close from "../../assets/close.svg";
 import close_red from "../../assets/close_red.svg";
 import edit from "../../assets/edit.svg";
 import ModifyExperience from "../ModifyExperience.jsx";
+import AddExperienceToRegistered from "../AddExperienceToRegistered.jsx";
 
 const ModifyExperiencesModal = (props) => {
     const dispatch = useDispatch();
@@ -33,6 +34,10 @@ const ModifyExperiencesModal = (props) => {
         setExperiences(prevExperiences => prevExperiences.filter(exp => exp.id !== id));
     }
 
+    const handleAdd = (exp) => {
+        setExperiences(prevExperiences => [...prevExperiences, exp]);
+    }
+
     return (
         <Modal size="xl" centered show={show} onHide={() => {dispatch(hideModifyExperiences())}}>
             <Modal.Header closeButton>
@@ -42,6 +47,7 @@ const ModifyExperiencesModal = (props) => {
                 {Array.isArray(experiences) && experiences.map((exp, index) => (
                     <ModifyExperience key={index} exp={exp} onDelete={handleDelete} onMutation={props.onMutation} />
                 ))}
+                <AddExperienceToRegistered onMutation={props.onMutation} onAdd={handleAdd} />
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={() => {dispatch(hideModifyExperiences())}}>
