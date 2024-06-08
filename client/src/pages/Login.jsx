@@ -35,7 +35,7 @@ const Login = () => {
             dispatch(show())
             navigate('/', {replace: true});
         } catch (error) {
-            console.log("error: ", error);
+            console.error(error);
             setErrors(error.status.toString());
         }
 

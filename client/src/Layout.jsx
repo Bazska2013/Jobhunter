@@ -11,7 +11,6 @@ export const Layout = () => {
         <Container>
             <SuccessModal />
             <ApplicantModal />
-            <ModifyExperiencesModal />
             <NavBar/>
             <Outlet/>
         </Container>

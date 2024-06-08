@@ -48,7 +48,7 @@ const JobListing = () => {
             const result = await applyForJob({
                 jobId: Number(id),
             }).unwrap();
-            console.log(result);
+            // console.log(result);
             dispatch(setSuccessMessage("Sikeres jelentkezés"));
             dispatch(show());
             refetchApplicants();
@@ -62,7 +62,7 @@ const JobListing = () => {
             const result = await deleteApply({
                 jobId: Number(id),
             }).unwrap();
-            console.log(result);
+            // console.log(result);
             dispatch(setSuccessMessage("Sikeres lejelentkezés"));
             dispatch(show());
             refetchApplicants();

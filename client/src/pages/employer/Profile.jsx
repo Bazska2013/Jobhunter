@@ -17,7 +17,7 @@ export const Profile = () => {
     const handleDelete = async (id) => {
         try {
             const result = await deleteJob(id).unwrap();
-            console.log(result);
+            // console.log(result);
         } catch (error) {
             console.error(error);
         }

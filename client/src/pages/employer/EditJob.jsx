@@ -75,9 +75,9 @@ const EditJob = () => {
                     },
                     id: id
                 }).unwrap();
-                console.log(result);
+                // console.log(result);
             } catch (error) {
-                console.log("error: ", error);
+                console.error(error);
             }
         } else {
             try {
@@ -92,9 +92,9 @@ const EditJob = () => {
                     homeOffice: values.homeOffice,
                 }).unwrap();
                 // navigate(`/job/${result.id}`, {replace: true});
-                console.log("result: ", result);
+                // console.log("result: ", result);
             } catch (error) {
-                console.log("error: ", error);
+                console.error(error);
             }
         }
         navigate('/profile');

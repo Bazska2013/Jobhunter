@@ -18,7 +18,7 @@ const ShowModifyExperiencesModalSlice = createSlice({
         },
         getData: (state) => {
             return state.data;
-        }
+        },
     }
 });
 

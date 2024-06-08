@@ -41,7 +41,7 @@ const Register = () => {
             dispatch(show())
             navigate('/login', {replace: true});
         } catch (error) {
-            console.log("error: ", error);
+            console.error(error);
             setErrors(error.status.toString());
         }
     }

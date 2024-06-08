@@ -7,6 +7,7 @@ import {useJobsForAnApplicantQuery} from "../../features/jobs/applicantsApiSlice
 import {useNavigate} from "react-router-dom";
 import {setData, showModifyExperiences} from "../../features/modals/showModifyExperiencesModalSlice.js";
 import {useGetExperiencesQuery} from "../../features/jobs/experiencesApiSlice.js";
+import ModifyExperiencesModal from "../../components/modals/ModifyExperiencesModal.jsx";
 
 export const Profile = () => {
     let user = useSelector(selectCurrentUser);
@@ -15,7 +16,7 @@ export const Profile = () => {
     const [jobs, setJobs] = useState([]);
     const [experiences, setExperiences] = useState([]);
     const {data, isLoading, isError} = useJobsForAnApplicantQuery({userId: user.id});
-    const {data: experiencesData, isLoading: experiencesIsLoading, isError: experiencesIsError} = useGetExperiencesQuery();
+    const {data: experiencesData, isLoading: experiencesIsLoading, isError: experiencesIsError, refetch} = useGetExperiencesQuery();
 
     useEffect(() => {
         if (data && !isLoading && !isError) {
@@ -25,7 +26,7 @@ export const Profile = () => {
 
     useEffect(() => {
         if (experiencesData && !experiencesIsLoading && !experiencesIsError) {
-            setExperiences(experiencesData);
+            setExperiences(experiencesData.data);
         }
     }, [experiencesData, experiencesIsLoading, experiencesIsError]);
 
@@ -34,8 +35,13 @@ export const Profile = () => {
         dispatch(showModifyExperiences());
     }
 
+    const handleRefetch = () => {
+        refetch();
+    };
+
     return (
         <div>
+            <ModifyExperiencesModal onMutation={handleRefetch} />
             <h1>Profilom</h1>
             <Container>
                 <Row>
@@ -78,11 +84,13 @@ export const Profile = () => {
                                 Korábbi tapasztalatok
                             </th>
                         </tr>
-                        <tr>
-                            <td>Anonymus Kft.</td>
-                            <td>2020-2024</td>
-                            <td>Full Time Back end Developer</td>
-                        </tr>
+                        {Array.isArray(experiences) && experiences.map((experience) => (
+                            <tr key={experience.id}>
+                                <td>{experience.company}</td>
+                                <td>{experience.interval}</td>
+                                <td>{experience.title}</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </Table>
                 {jobs.length > 0 ? <>
