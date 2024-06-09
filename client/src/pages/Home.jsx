@@ -4,6 +4,9 @@ import {useSelector} from "react-redux";
 import {selectCurrentUser} from "../features/auth/authSlice.js";
 import {useAllJobsQuery, useFilterJobsQuery} from "../features/jobs/jobsApiSlice.js";
 import { useNavigate } from 'react-router-dom';
+import LoaderAnimation from "../components/LoaderAnimation.jsx";
+import * as PropTypes from "prop-types";
+import ErrorCard from "../components/ErrorCard.jsx";
 
 const Home = () => {
     const [show, setShow] = useState(false);
@@ -158,18 +161,12 @@ const Home = () => {
                 </Row>
             </Container>
                     {isLoading === true ? <>
-                        <Spinner animation="border" variant="secondary" role="status" >
-                            <span className="visually-hidden" >Adatok betöltése...</span>
-                        </Spinner>
+                        <LoaderAnimation/>
                     </> : (isError === true ? <>
-                        <Card>
-                            <Card.Body>
-                                <Card.Title>Hiba</Card.Title>
-                                <Card.Text>Hiba történt az adatok betöltése során. Kattintson az Újrapróbálkozás gombra az adatok újbóli lekéréséhez.</Card.Text>
-                                <Button variant="custom_primary" onClick={() => {navigate(0)}}>Újrapróbálkozás</Button>
-                            </Card.Body>
-                        </Card>
-                    </> : <>
+                            <ErrorCard onClick={() => {
+                                navigate(0)
+                            }}/>
+                        </> : <>
                             <Container style={{border: "#f8c124 1px solid", marginBottom: "20px", borderRadius: "10px", boxShadow: "#ddac25 0 0 10px"}}>
                                 <Row>
                                     <Table style={{marginTop: "20px"}} hover>
