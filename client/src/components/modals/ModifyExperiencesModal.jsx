@@ -1,22 +1,16 @@
 import {useDispatch, useSelector} from "react-redux";
-import {InputGroup, Modal, Form, Button} from "react-bootstrap";
+import {Modal, Button} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {hideModifyExperiences} from "../../features/modals/showModifyExperiencesModalSlice.js";
-import check from "../../assets/check.svg";
-import close from "../../assets/close.svg";
-import close_red from "../../assets/close_red.svg";
-import edit from "../../assets/edit.svg";
 import ModifyExperience from "../experiences/ModifyExperience.jsx";
 import AddExperienceToRegistered from "../experiences/AddExperienceToRegistered.jsx";
+import PropTypes from "prop-types";
 
 const ModifyExperiencesModal = (props) => {
     const dispatch = useDispatch();
     let show = useSelector(state => state.showModifyExperiencesModal.show);
     let data = useSelector(state => state.showModifyExperiencesModal.data);
-    const [modified, setModified] = useState(false);
     const [experiences, setExperiences] = useState(data);
-    const [experience, setExperience] = useState({});
-    const [selected, setSelected] = useState(null);
 
     useEffect(() => {
         if (Array.isArray(data)) {
@@ -57,5 +51,9 @@ const ModifyExperiencesModal = (props) => {
         </Modal>
     )
 }
+
+ModifyExperiencesModal.propTypes = {
+    onMutation: PropTypes.func.isRequired
+};
 
 export default ModifyExperiencesModal;

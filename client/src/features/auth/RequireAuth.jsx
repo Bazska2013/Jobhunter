@@ -1,6 +1,7 @@
 import {useSelector} from "react-redux";
 import {selectCurrentUser} from "./authSlice.js";
 import {Navigate} from "react-router-dom";
+import PropTypes from "prop-types";
 
 export const RequireAuth = ({children}) => {
     let user = useSelector(selectCurrentUser);
@@ -11,3 +12,5 @@ export const RequireAuth = ({children}) => {
 
     return children;
 }
+
+RequireAuth.protoTypes = {children: PropTypes.node.isRequired};

@@ -1,6 +1,5 @@
-import {Button, Container, Form, Modal} from "react-bootstrap";
-import React, {useState} from "react";
-import NavBar from "../components/NavBar.jsx";
+import {Button, Container, Form} from "react-bootstrap";
+import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import * as yup from "yup";
@@ -11,7 +10,6 @@ import ErrorModal from "../components/modals/ErrorModal.jsx";
 import {setSuccessMessage, show} from "../features/modals/showModalSlice.js";
 import NewExperiencesModal from "../components/modals/NewExperiencesModal.jsx";
 import {
-    getExperienceData, selectExperienceData,
     setExperienceData,
     showNewExperiences
 } from "../features/modals/showNewExperiencesModalSlice.js";
@@ -36,7 +34,7 @@ const Register = () => {
 
     const handleSubmit = async (values) => {
         try {
-            const result = await authRegister({
+            await authRegister({
                 email: values.email,
                 password: values.password1,
                 fullname: values.name,

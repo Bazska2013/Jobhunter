@@ -25,7 +25,7 @@ const JobListing = () => {
 
     const { data, isLoading, isError } = useOneJobQuery(id);
 
-    const {data: jobApplicants, isLoading: applicantsLoading, isError: applicantsError, refetch: refetchApplicants} = useApplicantsForAJobQuery({jobId: id});
+    const {data: jobApplicants, refetch: refetchApplicants} = useApplicantsForAJobQuery({jobId: id});
 
     useEffect(() => {
         if (jobApplicants && jobApplicants.length > 0) {
@@ -45,10 +45,9 @@ const JobListing = () => {
 
     const handleApply = async () => {
         try {
-            const result = await applyForJob({
+            await applyForJob({
                 jobId: Number(id),
             }).unwrap();
-            // console.log(result);
             dispatch(setSuccessMessage("Sikeres jelentkezés"));
             dispatch(show());
             refetchApplicants();
@@ -59,7 +58,7 @@ const JobListing = () => {
 
     const handleRemoveApply = async () => {
         try {
-            const result = await deleteApply({
+            await deleteApply({
                 jobId: Number(id),
             }).unwrap();
             // console.log(result);

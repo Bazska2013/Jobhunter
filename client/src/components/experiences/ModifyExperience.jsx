@@ -5,6 +5,7 @@ import edit from "../../assets/edit.svg";
 import close_red from "../../assets/close_red.svg";
 import {useState} from "react";
 import {useDeleteExperienceMutation, useModifyExperienceMutation} from "../../features/jobs/experiencesApiSlice.js";
+import PropTypes from "prop-types";
 
 const ModifyExperience = (props) => {
     const [selected, setSelected] = useState(false);
@@ -36,7 +37,7 @@ const ModifyExperience = (props) => {
 
     const handleSave = async () => {
         try {
-            const result = await modify({
+            await modify({
                 body: {
                     company: experience.company,
                     title: experience.title,
@@ -44,7 +45,6 @@ const ModifyExperience = (props) => {
                 },
                 id: experience.id
             }).unwrap();
-            // console.log(result);
             setSelected(false);
             props.onMutation();
         } catch (error) {
@@ -55,8 +55,7 @@ const ModifyExperience = (props) => {
 
     const handleDelete = async () => {
         try {
-            const result = await deleteExp(experience.id).unwrap();
-            // console.log(result);
+            await deleteExp(experience.id).unwrap();
             props.onMutation();
             props.onDelete(experience.id);
         } catch (error) {
@@ -108,6 +107,12 @@ const ModifyExperience = (props) => {
             }
         </InputGroup>
     )
+}
+
+ModifyExperience.propTypes = {
+    exp: PropTypes.object.isRequired,
+    onMutation: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired
 }
 
 export default ModifyExperience;

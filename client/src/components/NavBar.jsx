@@ -1,4 +1,4 @@
-import {Button, Container, Modal, Nav, Navbar} from "react-bootstrap";
+import {Container, Nav, Navbar} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {logout, selectCurrentUser} from "../features/auth/authSlice.js";

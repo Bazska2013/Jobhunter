@@ -1,4 +1,3 @@
-import React from 'react';
 import {Button, Col, Container, Row} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {selectCurrentUser} from "../../features/auth/authSlice"
@@ -18,8 +17,7 @@ export const Profile = () => {
 
     const handleDelete = async (id) => {
         try {
-            const result = await deleteJob(id).unwrap();
-            // console.log(result);
+            await deleteJob(id).unwrap();
         } catch (error) {
             console.error(error);
         }

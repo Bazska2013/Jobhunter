@@ -1,11 +1,10 @@
-import {Col, Container, InputGroup, Row, Form, Button, Table, Offcanvas, Spinner, Card} from "react-bootstrap";
-import React, {useState} from "react";
+import {Col, Container, Row, Form, Button, Table, Offcanvas} from "react-bootstrap";
+import {useState} from "react";
 import {useSelector} from "react-redux";
 import {selectCurrentUser} from "../features/auth/authSlice.js";
 import {useAllJobsQuery, useFilterJobsQuery} from "../features/jobs/jobsApiSlice.js";
 import { useNavigate } from 'react-router-dom';
 import LoaderAnimation from "../components/LoaderAnimation.jsx";
-import * as PropTypes from "prop-types";
 import ErrorCard from "../components/ErrorCard.jsx";
 
 const Home = () => {
@@ -75,6 +74,7 @@ const Home = () => {
                 }
             }
         }
+        setShow(false);
         setSearchParams(sendValues);
     }
 

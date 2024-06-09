@@ -1,8 +1,8 @@
 import {useDispatch, useSelector} from "react-redux";
-import {Button, Col, Modal, Row, Table} from "react-bootstrap";
+import {Button, Col, Modal, Row} from "react-bootstrap";
 import {hideApplicant} from "../../features/modals/showApplicantModalSlice.js";
 
-const ApplicantModal = (props) => {
+const ApplicantModal = () => {
     const dispatch = useDispatch();
     let show = useSelector(state => state.showApplicantModal.show);
     let data = useSelector(state => state.showApplicantModal.data);

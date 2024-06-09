@@ -1,8 +1,7 @@
 import {Button, Container, Form} from "react-bootstrap";
 import {useDispatch} from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import NavBar from "../components/NavBar.jsx";
-import React, {useState} from "react";
+import {useState} from "react";
 import { useLoginMutation } from "../features/auth/authApiSlice.js";
 import {Formik} from "formik";
 import * as yup from "yup";

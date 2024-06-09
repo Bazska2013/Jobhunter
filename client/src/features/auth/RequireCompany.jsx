@@ -2,6 +2,7 @@ import {selectCurrentUser} from "./authSlice.js";
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import NoMatch from "../../components/NoMatch.jsx";
+import PropTypes from "prop-types";
 
 export const RequireCompany = ({children}) => {
     let user = useSelector(selectCurrentUser);
@@ -18,3 +19,5 @@ export const RequireCompany = ({children}) => {
 
     return <NoMatch />;
 }
+
+RequireCompany.propTypes = {children: PropTypes.node.isRequired};

@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Button, Col, Container, Row, Table} from "react-bootstrap";
-import NavBar from "../../components/NavBar.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import {selectCurrentUser} from "../../features/auth/authSlice.js";
 import {useJobsForAnApplicantQuery} from "../../features/jobs/applicantsApiSlice.js";

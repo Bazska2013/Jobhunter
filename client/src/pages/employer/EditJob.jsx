@@ -1,5 +1,5 @@
 import {Button, Container, Form, InputGroup} from "react-bootstrap";
-import React, {useState, useEffect} from "react";
+import {useState, useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import {useCreateJobMutation, useOneJobQuery, useModifyJobMutation} from "../../features/jobs/jobsApiSlice.js";
@@ -63,7 +63,7 @@ const EditJob = () => {
         }
         if (id !== undefined) {
             try {
-                const result = await modifyJob({
+                await modifyJob({
                     body: {
                         company: values.company,
                         position: values.position,
@@ -76,14 +76,13 @@ const EditJob = () => {
                     },
                     id: id
                 }).unwrap();
-                // console.log(result);
                 dispatch(setSuccessMessage("Munkalehetőség módosítva!"));
             } catch (error) {
                 console.error(error);
             }
         } else {
             try {
-                const result = await createJob({
+                await createJob({
                     company: values.company,
                     position: values.position,
                     description: values.description,
@@ -93,8 +92,6 @@ const EditJob = () => {
                     city: values.city,
                     homeOffice: values.homeOffice,
                 }).unwrap();
-                // navigate(`/job/${result.id}`, {replace: true});
-                // console.log("result: ", result);
                 dispatch(setSuccessMessage("Munkalehetőség felvéve!"));
             } catch (error) {
                 console.error(error);

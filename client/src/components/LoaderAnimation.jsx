@@ -1,5 +1,4 @@
 import {Row, Spinner} from "react-bootstrap";
-import React from "react";
 
 const LoaderAnimation = () => {
     return <Row className="justify-content-center">

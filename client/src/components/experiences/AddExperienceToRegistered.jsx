@@ -4,6 +4,7 @@ import check from "../../assets/check.svg";
 import close from "../../assets/close.svg";
 import plus from "../../assets/plus.svg";
 import {useAddExperiencesMutation} from "../../features/jobs/experiencesApiSlice.js";
+import PropTypes from "prop-types";
 
 const AddExperienceToRegistered = (props) => {
     const [newExperience, setNewExperience] = useState(null);
@@ -33,12 +34,11 @@ const AddExperienceToRegistered = (props) => {
 
     const handleSave = async () => {
         try {
-            const result = await addExp({
+            await addExp({
                 company: newExperience.company,
                 title: newExperience.title,
                 interval: newExperience.interval
             }).unwrap();
-            // console.log(result);
             props.onMutation();
             props.onAdd({
                 company: newExperience.company,
@@ -95,5 +95,10 @@ const AddExperienceToRegistered = (props) => {
         </>
     )
 }
+
+AddExperienceToRegistered.propTypes = {
+    onAdd: PropTypes.func.isRequired,
+    onMutation: PropTypes.func.isRequired,
+};
 
 export default AddExperienceToRegistered;

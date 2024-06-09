@@ -1,4 +1,5 @@
 import {Button, Modal} from "react-bootstrap";
+import PropTypes from "prop-types";
 
 const ErrorModal = (props) => {
     const { error, onClose } = props;
@@ -27,5 +28,10 @@ const ErrorModal = (props) => {
         </Modal>
     );
 }
+
+ErrorModal.propTypes = {
+error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    onClose: PropTypes.func.isRequired,
+};
 
 export default ErrorModal;

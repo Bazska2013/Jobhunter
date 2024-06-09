@@ -2,7 +2,7 @@ import {Button, Modal} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {hide} from "../../features/modals/showModalSlice.js";
 
-const SuccessModal = (props) => {
+const SuccessModal = () => {
     const dispatch = useDispatch();
     let show = useSelector(state => state.showModal.show);
     let message = useSelector(state => state.showModal.message);

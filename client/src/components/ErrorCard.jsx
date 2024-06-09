@@ -1,5 +1,4 @@
 import {Button, Card} from "react-bootstrap";
-import React from "react";
 import * as PropTypes from "prop-types";
 
 const ErrorCard = (props) => {

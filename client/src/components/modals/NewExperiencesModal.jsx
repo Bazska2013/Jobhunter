@@ -1,9 +1,9 @@
-import {Button, Modal, Row, Form, ListGroup} from "react-bootstrap";
+import {Button, Modal, Row, Form} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {hideNewExperiences, setExperienceData} from "../../features/modals/showNewExperiencesModalSlice.js";
 import {useEffect, useState} from "react";
 
-const NewExperiencesModal = (props) => {
+const NewExperiencesModal = () => {
     const dispatch = useDispatch();
     let show = useSelector(state => state.showNewExperiencesModal?.show);
     let data = useSelector(state => state.showNewExperiencesModal?.data);
@@ -57,6 +57,7 @@ const NewExperiencesModal = (props) => {
                     <p>Soronként tördelve egy-egy munkatapasztalatot tudunk megadni.</p>
                 </Row>
                 <Row>
+                    {/* eslint-disable-next-line react/no-unescaped-entities */}
                     <p>";" jellel elválasztva adhatjuk meg ebben a sorrendben a tapasztalat adatait:</p>
                 </Row>
                 <Row>
