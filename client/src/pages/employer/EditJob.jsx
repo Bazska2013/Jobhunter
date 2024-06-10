@@ -6,12 +6,15 @@ import {useCreateJobMutation, useOneJobQuery, useModifyJobMutation} from "../../
 import * as yup from 'yup';
 import {Formik} from "formik";
 import {setSuccessMessage, show} from "../../features/modals/showModalSlice.js";
+import MultiRangeSlider from "multi-range-slider-react";
 
 const EditJob = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [createJob] = useCreateJobMutation();
     const [modifyJob] = useModifyJobMutation();
+    const [minValue, setMinValue] = useState(250000);
+    const [maxValue, setMaxValue] = useState(750000);
     let { id } = useParams();
     const [initialValues, setInitialValues] = useState({
         company: '',
@@ -161,7 +164,7 @@ const EditJob = () => {
                                     type="number"
                                     placeholder="tól"
                                     name="salaryFrom"
-                                    value={values.salaryFrom}
+                                    value={minValue}
                                     onChange={handleChange}
                                     isInvalid={!!errors.salaryFrom}
                                 />
@@ -172,7 +175,7 @@ const EditJob = () => {
                                     type="number"
                                     placeholder="ig"
                                     name="salaryTo"
-                                    value={values.salaryTo}
+                                    value={maxValue}
                                     onChange={handleChange}
                                     isInvalid={!!errors.salaryTo}
                                 />
@@ -180,6 +183,17 @@ const EditJob = () => {
                                     {errors.salaryTo}
                                 </Form.Control.Feedback>
                             </InputGroup>
+                            <MultiRangeSlider 
+                                min={100000}
+                                max={1000000}
+                                step={50000}
+                                minValue={values.salaryFrom}
+                                maxValue={values.salaryTo}
+                                onInput={(e) => {
+                                    setMinValue(e.minValue);
+                                    setMaxValue(e.maxValue);
+                                }}
+                            />
                             <Form.Select style={{marginBottom: "20px"}} aria-label="Foglalkoztatás formája"
                                          name="type"
                                          value={values.type}
