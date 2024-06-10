@@ -1,21 +1,18 @@
 import {Button, Container, Form, InputGroup} from "react-bootstrap";
-import {useState, useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
-import {useCreateJobMutation, useOneJobQuery, useModifyJobMutation} from "../../features/jobs/jobsApiSlice.js";
+import {useCreateJobMutation, useModifyJobMutation, useOneJobQuery} from "../../features/jobs/jobsApiSlice.js";
 import * as yup from 'yup';
 import {Formik} from "formik";
 import {setSuccessMessage, show} from "../../features/modals/showModalSlice.js";
-import MultiRangeSlider from "multi-range-slider-react";
 
 const EditJob = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [createJob] = useCreateJobMutation();
     const [modifyJob] = useModifyJobMutation();
-    const [minValue, setMinValue] = useState(250000);
-    const [maxValue, setMaxValue] = useState(750000);
-    let { id } = useParams();
+    let {id} = useParams();
     const [initialValues, setInitialValues] = useState({
         company: '',
         position: '',
@@ -27,7 +24,7 @@ const EditJob = () => {
         homeOffice: false,
     });
 
-    const { data, isLoading, isError } = useOneJobQuery(id, {
+    const {data, isLoading, isError} = useOneJobQuery(id, {
         skip: !id,
     });
 
@@ -42,7 +39,7 @@ const EditJob = () => {
                 salaryTo: job.salaryTo,
                 type: job.type,
                 city: job.city,
-                homeOffice: job.homeOffice,
+                homeOffice: job.homeOffice !== 0,
             });
         }
     }, [id, data, isLoading, isError]);
@@ -111,7 +108,7 @@ const EditJob = () => {
                     validationSchema={schema}
                     initialValues={initialValues}
                     enableReinitialize={true}
-                    onSubmit={ values => {
+                    onSubmit={values => {
                         handleSubmit(values);
                     }}
                 >
@@ -164,7 +161,7 @@ const EditJob = () => {
                                     type="number"
                                     placeholder="tól"
                                     name="salaryFrom"
-                                    value={minValue}
+                                    value={values.salaryFrom}
                                     onChange={handleChange}
                                     isInvalid={!!errors.salaryFrom}
                                 />
@@ -175,7 +172,7 @@ const EditJob = () => {
                                     type="number"
                                     placeholder="ig"
                                     name="salaryTo"
-                                    value={maxValue}
+                                    value={values.salaryTo}
                                     onChange={handleChange}
                                     isInvalid={!!errors.salaryTo}
                                 />
@@ -183,17 +180,6 @@ const EditJob = () => {
                                     {errors.salaryTo}
                                 </Form.Control.Feedback>
                             </InputGroup>
-                            <MultiRangeSlider 
-                                min={100000}
-                                max={1000000}
-                                step={50000}
-                                minValue={values.salaryFrom}
-                                maxValue={values.salaryTo}
-                                onInput={(e) => {
-                                    setMinValue(e.minValue);
-                                    setMaxValue(e.maxValue);
-                                }}
-                            />
                             <Form.Select style={{marginBottom: "20px"}} aria-label="Foglalkoztatás formája"
                                          name="type"
                                          value={values.type}
@@ -228,7 +214,7 @@ const EditJob = () => {
                                 name="homeOffice"
                                 type="checkbox"
                                 label="Home Office"
-                                value={values.homeOffice}
+                                checked={values.homeOffice}
                                 onChange={handleChange}
                             />
                             <Button style={{marginBottom: "20px"}} variant="custom_primary" type="submit">

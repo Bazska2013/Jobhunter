@@ -1,4 +1,4 @@
-import {Button, Modal, Row, Form} from "react-bootstrap";
+import {Button, Form, Modal, Row} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {hideNewExperiences, setExperienceData} from "../../features/modals/showNewExperiencesModalSlice.js";
 import {useEffect, useState} from "react";
@@ -51,7 +51,8 @@ const NewExperiencesModal = () => {
             </Modal.Header>
             <Modal.Body>
                 <Row>
-                    <h3>Az alábbi több-soros szöveges beviteli mezőben megadhatóak a korábbi munkatapasztalatok a következő módon:</h3>
+                    <h3>Az alábbi több-soros szöveges beviteli mezőben megadhatóak a korábbi munkatapasztalatok a
+                        következő módon:</h3>
                 </Row>
                 <Row>
                     <p>Soronként tördelve egy-egy munkatapasztalatot tudunk megadni.</p>
@@ -80,7 +81,9 @@ const NewExperiencesModal = () => {
                 {errors && errors}
                 <Button
                     variant="custom_primary"
-                    onClick={() => {handleSave()}}
+                    onClick={() => {
+                        handleSave()
+                    }}
                 >Mentés</Button>
             </Modal.Footer>
         </Modal>

@@ -7,13 +7,17 @@ const SuccessModal = () => {
     let show = useSelector(state => state.showModal.show);
     let message = useSelector(state => state.showModal.message);
     return (
-        <Modal show={show} onHide={() => {dispatch(hide())}}>
+        <Modal show={show} onHide={() => {
+            dispatch(hide())
+        }}>
             <Modal.Header closeButton>
                 <Modal.Title>Sikeres művelet</Modal.Title>
             </Modal.Header>
             <Modal.Body>{message}</Modal.Body>
             <Modal.Footer>
-                <Button variant="custom_secondary" onClick={() => {dispatch(hide())}}>
+                <Button variant="custom_secondary" onClick={() => {
+                    dispatch(hide())
+                }}>
                     Bezárás
                 </Button>
             </Modal.Footer>

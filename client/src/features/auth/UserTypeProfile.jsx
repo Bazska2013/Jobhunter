@@ -14,8 +14,8 @@ export const UserTypeProfile = () => {
     }, [user]);
 
     if (userType === "company") {
-        return <CompanyProfile />;
+        return <CompanyProfile/>;
     } else {
-        return <EmployeeProfile />;
+        return <EmployeeProfile/>;
     }
 }

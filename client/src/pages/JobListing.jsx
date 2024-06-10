@@ -1,8 +1,8 @@
-import {Button, Col, Container, Row, Table} from "react-bootstrap";
-import { useEffect, useState } from "react";
+import {Container, Row, Table} from "react-bootstrap";
+import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import { useOneJobQuery } from "../features/jobs/jobsApiSlice.js";
-import { selectCurrentUser } from "../features/auth/authSlice.js";
+import {useOneJobQuery} from "../features/jobs/jobsApiSlice.js";
+import {selectCurrentUser} from "../features/auth/authSlice.js";
 import {useDispatch, useSelector} from "react-redux";
 import {
     useApplicantsForAJobQuery,
@@ -11,19 +11,20 @@ import {
 } from "../features/jobs/applicantsApiSlice.js";
 import {setSuccessMessage, show} from "../features/modals/showModalSlice.js";
 import Applicants from "../components/Applicants.jsx";
+import JobListingHeader from "../components/unique/JobListingHeader.jsx";
 
 const JobListing = () => {
     const dispatch = useDispatch();
     let user = useSelector(selectCurrentUser);
     const navigate = useNavigate();
-    const [ applyForJob ] = useApplyForJobMutation();
-    const [ deleteApply ] = useDeleteApplicationFromAJobMutation();
-    let { id } = useParams();
+    const [applyForJob] = useApplyForJobMutation();
+    const [deleteApply] = useDeleteApplicationFromAJobMutation();
+    let {id} = useParams();
     const [alreadyApplied, setAlreadyApplied] = useState(false);
 
     const [job, setJob] = useState({});
 
-    const { data, isLoading, isError } = useOneJobQuery(id);
+    const {data, isLoading, isError} = useOneJobQuery(id);
 
     const {data: jobApplicants, refetch: refetchApplicants} = useApplicantsForAJobQuery({jobId: id});
 
@@ -61,7 +62,6 @@ const JobListing = () => {
             await deleteApply({
                 jobId: Number(id),
             }).unwrap();
-            // console.log(result);
             dispatch(setSuccessMessage("Sikeres lejelentkezés"));
             dispatch(show());
             refetchApplicants();
@@ -73,36 +73,32 @@ const JobListing = () => {
 
     return (
         <>
-            <Container style={{border: "#f8c124 1px solid", marginBottom: "20px", borderRadius: "10px", boxShadow: "#ddac25 0 0 10px"}}>
+            <Container style={{
+                border: "#f8c124 1px solid",
+                marginBottom: "20px",
+                borderRadius: "10px",
+                boxShadow: "#ddac25 0 0 10px"
+            }}>
                 <Row><h1>{job.company}</h1></Row>
                 <Row><p>Home Office: {job.homeOffice === 0 ? "Nincs" : "Van"}</p></Row>
                 <Row><p>{job.salaryFrom}-{job.salaryTo} Ft.</p></Row>
-                <Row><p>{job.type === "full-time" ? "Teljes állás" : (job.type === "part-time" ? "Részmunkaidő" : "Gyakornoki")}</p></Row>
-            </Container>
-            <Container style={{border: "#f8c124 1px solid", marginBottom: "20px", borderRadius: "10px", boxShadow: "#ddac25 0 0 10px"}}>
                 <Row>
-                    <Col>
-                        <Row>
-                            <h2>Cég részletei</h2>
-                        </Row>
-                        <Row>
-                            <p>Megtetszett a lehetőség? Jelentkezz!</p>
-                        </Row>
-                    </Col>
-                    {user.role === "company" ? (job.userId === user.id ? <>
-                        <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <Button variant="custom_primary" onClick={() => {navigate('/editjob/'+id)}} >Szerkesztés</Button>
-                        </Col>
-                    </> : <></>) : <>
-                        <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            {alreadyApplied ? <>
-                                <Button variant="custom_primary" onClick={() => {handleRemoveApply()}}>Jelentkezés visszavonása</Button>
-                            </> : <>
-                                <Button variant="custom_primary" onClick={() => {handleApply()}}>Jelentkezés</Button>
-                            </>}
-                        </Col>
-                    </>}
+                    <p>{job.type === "full-time" ? "Teljes állás" : (job.type === "part-time" ? "Részmunkaidő" : "Gyakornoki")}</p>
                 </Row>
+            </Container>
+            <Container style={{
+                border: "#f8c124 1px solid",
+                marginBottom: "20px",
+                borderRadius: "10px",
+                boxShadow: "#ddac25 0 0 10px"
+            }}>
+                <JobListingHeader user={user} job={job} onClick={() => {
+                    navigate('/editjob/' + id)
+                }} alreadyApplied={alreadyApplied} onClick1={() => {
+                    handleRemoveApply()
+                }} onClick2={() => {
+                    handleApply()
+                }}/>
                 <Row>
                     <Table style={{marginTop: "20px"}} striped responsive>
                         <tbody>
@@ -138,7 +134,7 @@ const JobListing = () => {
                     </Table>
                 </Row>
             </Container>
-            {user.role === "company" && job.userId === user.id ? <Applicants id={id} />: <></>}
+            {user.role === "company" && job.userId === user.id ? <Applicants id={id}/> : <></>}
         </>
     );
 }

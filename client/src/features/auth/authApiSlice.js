@@ -1,7 +1,6 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 
-// const BASE_URL = "http://localhost:3030/";
-const BASE_URL = "https://3030-bazska2013-jobhunter-extiulkjdh5.ws-eu114.gitpod.io/";
+const BASE_URL = "http://localhost:3030/";
 
 export const authApiSlice = createApi({
     reducerPath: "authApi",
@@ -30,4 +29,4 @@ export const authApiSlice = createApi({
     })
 });
 
-export const { useRegisterMutation, useLoginMutation } = authApiSlice;
+export const {useRegisterMutation, useLoginMutation} = authApiSlice;

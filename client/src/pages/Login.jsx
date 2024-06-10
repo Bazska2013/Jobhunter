@@ -1,8 +1,8 @@
 import {Button, Container, Form} from "react-bootstrap";
 import {useDispatch} from "react-redux";
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {useState} from "react";
-import { useLoginMutation } from "../features/auth/authApiSlice.js";
+import {useLoginMutation} from "../features/auth/authApiSlice.js";
 import {Formik} from "formik";
 import * as yup from "yup";
 import {login} from "../features/auth/authSlice.js";
@@ -13,7 +13,6 @@ const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [authLogin] = useLoginMutation();
-    // const [values, setValues] = useState({});
     const [errors, setErrors] = useState('');
 
     const schema = yup.object().shape({
@@ -22,7 +21,6 @@ const Login = () => {
     });
 
     const handleSubmit = async (values) => {
-        // event.preventDefault();
         try {
             const result = await authLogin({
                 email: values.email,
@@ -42,15 +40,20 @@ const Login = () => {
 
     return (
         <>
-            <ErrorModal error={errors} onClose={() => setErrors('')} />
-            <Container style={{border: "#f8c124 1px solid", marginBottom: "20px", borderRadius: "10px", boxShadow: "#ddac25 0 0 10px"}}>
+            <ErrorModal error={errors} onClose={() => setErrors('')}/>
+            <Container style={{
+                border: "#f8c124 1px solid",
+                marginBottom: "20px",
+                borderRadius: "10px",
+                boxShadow: "#ddac25 0 0 10px"
+            }}>
                 <Formik
                     validationSchema={schema}
                     initialValues={{
                         email: '',
                         password: '',
                     }}
-                    onSubmit={ values => {
+                    onSubmit={values => {
                         handleSubmit(values);
                     }}
                 >
@@ -66,7 +69,7 @@ const Login = () => {
                                     onChange={handleChange}
                                     isInvalid={!!errors.email}
                                 />
-                                <Form.Control.Feedback type="invalid" >
+                                <Form.Control.Feedback type="invalid">
                                     {errors.email}
                                 </Form.Control.Feedback>
                             </Form.Group>

@@ -23,6 +23,4 @@ const showApplicantModalSlice = createSlice({
 });
 
 export const {showApplicant, hideApplicant, setData, getData} = showApplicantModalSlice.actions;
-export const selectShowApplicantModal = (state) => state.showApplicantModal.show;
 export const showApplicantModalReducer = showApplicantModalSlice.reducer;
-export default showApplicantModalSlice;

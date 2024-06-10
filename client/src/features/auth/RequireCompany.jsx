@@ -17,7 +17,7 @@ export const RequireCompany = ({children}) => {
         return children;
     }
 
-    return <NoMatch />;
+    return <NoMatch/>;
 }
 
 RequireCompany.propTypes = {children: PropTypes.node.isRequired};

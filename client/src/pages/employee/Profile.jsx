@@ -17,7 +17,12 @@ export const Profile = () => {
     const [jobs, setJobs] = useState([]);
     const [experiences, setExperiences] = useState([]);
     const {data, isLoading, isError} = useJobsForAnApplicantQuery({userId: user.id});
-    const {data: experiencesData, isLoading: experiencesIsLoading, isError: experiencesIsError, refetch} = useGetExperiencesQuery();
+    const {
+        data: experiencesData,
+        isLoading: experiencesIsLoading,
+        isError: experiencesIsError,
+        refetch
+    } = useGetExperiencesQuery();
 
     useEffect(() => {
         if (data && !isLoading && !isError) {
@@ -42,14 +47,24 @@ export const Profile = () => {
 
     return (
         <div>
-            <ModifyExperiencesModal onMutation={handleRefetch} />
-            <Container style={{border: "#f8c124 1px solid", marginBottom: "20px", borderRadius: "10px", boxShadow: "#ddac25 0 0 10px"}}>
+            <ModifyExperiencesModal onMutation={handleRefetch}/>
+            <Container style={{
+                border: "#f8c124 1px solid",
+                marginBottom: "20px",
+                borderRadius: "10px",
+                boxShadow: "#ddac25 0 0 10px"
+            }}>
                 <h1>Profilom</h1>
             </Container>
-            {isLoading === true ? <LoaderAnimation /> : (isError === true ? <ErrorCard onClick={() => {
+            {isLoading === true ? <LoaderAnimation/> : (isError === true ? <ErrorCard onClick={() => {
                 navigate(0)
             }}/> : <>
-                <Container style={{border: "#f8c124 1px solid", marginBottom: "20px", borderRadius: "10px", boxShadow: "#ddac25 0 0 10px"}}>
+                <Container style={{
+                    border: "#f8c124 1px solid",
+                    marginBottom: "20px",
+                    borderRadius: "10px",
+                    boxShadow: "#ddac25 0 0 10px"
+                }}>
                     <Row>
                         <Col>
                             <Row>
@@ -59,8 +74,10 @@ export const Profile = () => {
                                 <p>Adataid és tapasztalataid egy helyen</p>
                             </Row>
                         </Col>
-                        <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <Button variant="custom_primary" onClick={() => {handleExperienceModal()}}>Tapasztalatok szerkesztése</Button>
+                        <Col style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                            <Button variant="custom_primary" onClick={() => {
+                                handleExperienceModal()
+                            }}>Tapasztalatok szerkesztése</Button>
                         </Col>
                     </Row>
                     <Row>
@@ -116,7 +133,11 @@ export const Profile = () => {
                             </Col>
                         </Row>
                         {jobs.map((job) => (
-                            <Row style={{borderTop: "#7c8c94 1px solid", borderBottom: "#7c8c94 1px solid", textAlign: "center"}} key={job.jobId}>
+                            <Row style={{
+                                borderTop: "#7c8c94 1px solid",
+                                borderBottom: "#7c8c94 1px solid",
+                                textAlign: "center"
+                            }} key={job.jobId}>
                                 <Col>
                                     <p>{job.job.company}</p>
                                 </Col>
@@ -124,13 +145,15 @@ export const Profile = () => {
                                     <p>{job.job.position}</p>
                                 </Col>
                                 <Col>
-                                    <Button onClick={() => {navigate('/job/'+job.jobId)}} variant="custom_outline-primary">Állás részletei</Button>
+                                    <Button onClick={() => {
+                                        navigate('/job/' + job.jobId)
+                                    }} variant="custom_outline-primary">Állás részletei</Button>
                                 </Col>
                             </Row>
                         ))}
                     </> : <></>}
                 </Container>
-            </> )}
+            </>)}
         </div>
     )
 }

@@ -12,57 +12,57 @@ import {UserTypeProfile} from "./features/auth/UserTypeProfile.jsx";
 import "./App.css";
 
 function App() {
-  return (
-      <BrowserRouter>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route
-                path="/profile"
-                element={
-                  <RequireAuth>
-                      <UserTypeProfile />
-                  </RequireAuth>
-                }
-            />
-            <Route
-                path="/newjob"
-                element={
-                  <RequireAuth>
-                      <RequireCompany>
-                        <EditJob />
-                      </RequireCompany>
-                  </RequireAuth>
-                }
-            />
-            <Route
-                path="/editjob/:id"
-                element={
-                  <RequireAuth>
-                      <RequireCompany>
-                          <EditJob />
-                      </RequireCompany>
-                  </RequireAuth>
-                }
-            />
-            <Route
-                path="/job/:id"
-                element={
-                  <RequireAuth>
-                    <JobListing />
-                  </RequireAuth>
-                }
-            />
-              <Route
-                path="*"
-                element={<NoMatch />}
-              />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-  )
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route element={<Layout/>}>
+                    <Route path="/" element={<Home/>}/>
+                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/register" element={<Register/>}/>
+                    <Route
+                        path="/profile"
+                        element={
+                            <RequireAuth>
+                                <UserTypeProfile/>
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path="/newjob"
+                        element={
+                            <RequireAuth>
+                                <RequireCompany>
+                                    <EditJob/>
+                                </RequireCompany>
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path="/editjob/:id"
+                        element={
+                            <RequireAuth>
+                                <RequireCompany>
+                                    <EditJob/>
+                                </RequireCompany>
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path="/job/:id"
+                        element={
+                            <RequireAuth>
+                                <JobListing/>
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path="*"
+                        element={<NoMatch/>}
+                    />
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    )
 }
 
 export default App

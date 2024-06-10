@@ -56,39 +56,67 @@ const AddExperienceToRegistered = (props) => {
         <>
             {newExperience === null ? <>
                 <Button
-                    style={{backgroundImage:`url(${plus})`,backgroundSize:"cover", width:"40px", height:"40px", marginTop: "10px"}}
+                    style={{
+                        backgroundImage: `url(${plus})`,
+                        backgroundSize: "cover",
+                        width: "40px",
+                        height: "40px",
+                        marginTop: "10px"
+                    }}
                     onClick={() => {
-                    setNewExperience({
-                                         company: '',
-                                         title: '',
-                                         interval: '-',
-                                     })
-                }} variant="outline-secondary"></Button>
+                        setNewExperience({
+                            company: '',
+                            title: '',
+                            interval: '-',
+                        })
+                    }} variant="outline-secondary"></Button>
             </> : <>
                 <InputGroup>
-                    <InputGroup.Text >Cég neve</InputGroup.Text>
+                    <InputGroup.Text>Cég neve</InputGroup.Text>
                     <Form.Control
-                        onChange={(e) => {handleChangeExperience('company', e.target.value)}}
-                        value={newExperience.company} />
+                        onChange={(e) => {
+                            handleChangeExperience('company', e.target.value)
+                        }}
+                        value={newExperience.company}/>
                     <InputGroup.Text>Pozíció</InputGroup.Text>
                     <Form.Control
-                        onChange={(e) => {handleChangeExperience('title', e.target.value)}}
-                        value={newExperience.title} />
+                        onChange={(e) => {
+                            handleChangeExperience('title', e.target.value)
+                        }}
+                        value={newExperience.title}/>
                     <InputGroup.Text>Kezdés éve</InputGroup.Text>
                     <Form.Control
-                        onChange={(e) => {handleChangeExperience('start', e.target.value)}}
-                        value={((newExperience.interval).split('-'))[0]} />
+                        onChange={(e) => {
+                            handleChangeExperience('start', e.target.value)
+                        }}
+                        value={((newExperience.interval).split('-'))[0]}/>
                     <InputGroup.Text>Befejezés éve</InputGroup.Text>
                     <Form.Control
-                        onChange={(e) => {handleChangeExperience('end', e.target.value)}}
-                        value={((newExperience.interval).split('-'))[1]} />
+                        onChange={(e) => {
+                            handleChangeExperience('end', e.target.value)
+                        }}
+                        value={((newExperience.interval).split('-'))[1]}/>
                     <Button
-                        onClick={() => {handleSave()}}
-                        variant="outline-success" style={{backgroundImage:`url(${check})`,backgroundSize:"cover", width:"40px", height:"40px"}}
+                        onClick={() => {
+                            handleSave()
+                        }}
+                        variant="outline-success" style={{
+                        backgroundImage: `url(${check})`,
+                        backgroundSize: "cover",
+                        width: "40px",
+                        height: "40px"
+                    }}
                     ></Button>
                     <Button
-                        onClick={() => {handleCancel()}}
-                        variant="outline-danger" style={{backgroundImage:`url(${close})`,backgroundSize:"cover", width:"40px", height:"40px"}}
+                        onClick={() => {
+                            handleCancel()
+                        }}
+                        variant="outline-danger" style={{
+                        backgroundImage: `url(${close})`,
+                        backgroundSize: "cover",
+                        width: "40px",
+                        height: "40px"
+                    }}
                     ></Button>
                 </InputGroup>
             </>}

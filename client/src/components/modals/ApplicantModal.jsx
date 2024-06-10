@@ -7,7 +7,9 @@ const ApplicantModal = () => {
     let show = useSelector(state => state.showApplicantModal.show);
     let data = useSelector(state => state.showApplicantModal.data);
     return (
-        <Modal size="lg" centered show={show} onHide={() => {dispatch(hideApplicant())}}>
+        <Modal size="lg" centered show={show} onHide={() => {
+            dispatch(hideApplicant())
+        }}>
             <Modal.Header closeButton>
                 <Modal.Title>Jelentkező adatai</Modal.Title>
             </Modal.Header>
@@ -22,7 +24,9 @@ const ApplicantModal = () => {
                 </Row>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="custom_secondary" onClick={() => {dispatch(hideApplicant())}}>
+                <Button variant="custom_secondary" onClick={() => {
+                    dispatch(hideApplicant())
+                }}>
                     Bezárás
                 </Button>
             </Modal.Footer>

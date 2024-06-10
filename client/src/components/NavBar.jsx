@@ -34,14 +34,15 @@ const NavBar = () => {
                         className="d-inline-block align-top"
                     />{' '}Jobhunter
                 </Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto" variant="underline">
-                        {user ? ( <>
+                        {user ? (<>
                             <Nav.Link onClick={() => navigate("/")}>Álláshirdetések</Nav.Link>
                             <Nav.Link onClick={() => navigate("/profile")}>Profilom</Nav.Link>
-                            {userType === "company" && <Nav.Link onClick={() => navigate("/newjob")}>Álláshirdetés hozzáadása</Nav.Link>}
-                            <Nav.Link onClick={handleLogout} >Kijelentkezés</Nav.Link>
+                            {userType === "company" &&
+                                <Nav.Link onClick={() => navigate("/newjob")}>Álláshirdetés hozzáadása</Nav.Link>}
+                            <Nav.Link onClick={handleLogout}>Kijelentkezés</Nav.Link>
                         </>) : (<>
                             <Nav.Link onClick={() => navigate("/register")}>Regisztráció</Nav.Link>
                             <Nav.Link onClick={() => navigate("/login")}>Bejelentkezés</Nav.Link>

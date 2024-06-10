@@ -1,11 +1,13 @@
-import {Col, Container, Row, Form, Button, Table, Offcanvas} from "react-bootstrap";
+import {Container, Row, Table} from "react-bootstrap";
 import {useState} from "react";
 import {useSelector} from "react-redux";
 import {selectCurrentUser} from "../features/auth/authSlice.js";
 import {useAllJobsQuery, useFilterJobsQuery} from "../features/jobs/jobsApiSlice.js";
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import LoaderAnimation from "../components/LoaderAnimation.jsx";
 import ErrorCard from "../components/ErrorCard.jsx";
+import FilterOffCanvas from "../components/unique/FilterOffCanvas.jsx";
+import HomeSearch from "../components/unique/HomeSearch.jsx";
 
 const Home = () => {
     const [show, setShow] = useState(false);
@@ -95,8 +97,12 @@ const Home = () => {
     const [searchParams, setSearchParams] = useState({});
 
 
-    const { data: allJobsResponse, isLoading: allJobsLoading, isError: allJobsError } = useAllJobsQuery();
-    const { data: filteredJobsResponse = {}, isLoading: filteredJobsLoading, isError: filteredJobsError } = useFilterJobsQuery(searchParams);
+    const {data: allJobsResponse, isLoading: allJobsLoading, isError: allJobsError} = useAllJobsQuery();
+    const {
+        data: filteredJobsResponse = {},
+        isLoading: filteredJobsLoading,
+        isError: filteredJobsError
+    } = useFilterJobsQuery(searchParams);
 
     const isFilterApplied = Object.keys(searchParams).length > 0;
 
@@ -104,98 +110,79 @@ const Home = () => {
     const isLoading = isFilterApplied ? filteredJobsLoading : allJobsLoading;
     const isError = isFilterApplied ? filteredJobsError : allJobsError;
 
-        return (
+    return (
         <>
-            <Offcanvas show={show} onHide={() => {setShow(false)}} placement="end" >
-                <Offcanvas.Header closeButton >
-                    <Offcanvas.Title>Szűrés</Offcanvas.Title>
-                </Offcanvas.Header>
-                <Offcanvas.Body>
-                    <Form.Group style={{marginTop: "20px"}}>
-                        <Form.Label>Fizetési sáv alja</Form.Label>
-                        <Form.Control type="number" value={search.salaryFrom} onChange={(e) => {handleSearchChange("salaryFrom", e.target.value)}} />
-                    </Form.Group>
-                    <Form.Group style={{marginTop: "20px"}}>
-                        <Form.Label>Fizetési sáv teteje</Form.Label>
-                        <Form.Control type="number" value={search.salaryTo} onChange={(e) => {handleSearchChange("salaryTo", e.target.value)}} />
-                    </Form.Group>
-                    <Form.Group style={{marginTop: "20px"}}>
-                        <Form.Label>Foglalkoztatás típusa</Form.Label>
-                        <Form.Select aria-label="Foglalkoztatás formája" value={search.type} onChange={(e) => {handleSearchChange("type", e.target.value)}}>
-                            <option value="full-time">Teljes állás (full-time)</option>
-                            <option value="part-time">Részmunkaidős (part-time)</option>
-                            <option value="internship">Gyakornoki (internship)</option>
-                        </Form.Select>
-                    </Form.Group>
-                    <Form.Group style={{marginTop: "20px"}}>
-                        <Form.Label>Település</Form.Label>
-                        <Form.Control type="text" value={search.city} onChange={(e) => {handleSearchChange("city", e.target.value)}} />
-                    </Form.Group>
-                    <Form.Check style={{marginTop: "20px"}} id="home_office" value={!search.homeOffice} type="checkbox" label="Home Office lehetőség" onChange={(e) => {handleSearchChange("homeOffice", e.target.value)}} />
-                    <Row style={{textAlign: "center", marginTop: "20px"}}>
-                        <Col>
-                            <Button variant="custom_primary" onClick={handleSend}>Keresés</Button>
-                        </Col>
-                        <Col>
-                            <Button variant="custom_danger" onClick={handleFilterDelete}>Szűrők törlése</Button>
-                        </Col>
-                    </Row>
-                </Offcanvas.Body>
-            </Offcanvas>
-            <Container style={{border: "#f8c124 1px solid", marginBottom: "20px", borderRadius: "10px", boxShadow: "#ddac25 0 0 10px"}}>
+            <FilterOffCanvas show={show} onHide={() => {
+                setShow(false)
+            }} search={search} onChange={(e) => {
+                handleSearchChange("salaryFrom", e.target.value)
+            }} onChange1={(e) => {
+                handleSearchChange("salaryTo", e.target.value)
+            }} onChange2={(e) => {
+                handleSearchChange("type", e.target.value)
+            }} onChange3={(e) => {
+                handleSearchChange("city", e.target.value)
+            }} onChange4={(e) => {
+                handleSearchChange("homeOffice", e.target.value)
+            }} onClick={handleSend} onClick1={handleFilterDelete}/>
+            <Container style={{
+                border: "#f8c124 1px solid",
+                marginBottom: "20px",
+                borderRadius: "10px",
+                boxShadow: "#ddac25 0 0 10px"
+            }}>
                 <Row>
                     <h1>Böngéssz az állások között:</h1>
                 </Row>
-                <Row>
-                    <Col sm={8}>
-                        <Form.Control type="text" placeholder="Keresés" onChange={(e) => {handleSearchChange("company", e.target.value)}} />
-                    </Col>
-                    <Col style={{textAlign: "center"}}>
-                        <Button variant="custom_primary" onClick={handleSend}>Keresés</Button>
-                    </Col>
-                    {user && <>
-                        <Col style={{textAlign: "center"}}>
-                            <Button variant="light" onClick={() => {setShow(true)}}>Szűrés</Button>
-                        </Col>
-                    </>}
-                </Row>
+                <HomeSearch onChange={(e) => {
+                    handleSearchChange("company", e.target.value)
+                }} onClick={handleSend} user={user} onClick1={() => {
+                    setShow(true)
+                }}/>
             </Container>
-                    {isLoading === true ? <>
-                        <LoaderAnimation/>
-                    </> : (isError === true ? <>
-                            <ErrorCard onClick={() => {
-                                navigate(0)
-                            }}/>
-                        </> : <>
-                            <Container style={{border: "#f8c124 1px solid", marginBottom: "20px", borderRadius: "10px", boxShadow: "#ddac25 0 0 10px"}}>
-                                <Row>
-                                    <Table style={{marginTop: "20px"}} hover>
-                                        <thead>
-                                        <tr>
-                                            <th>ÁLLÁS</th>
-                                            <th>BÉREZÉS</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {Array.isArray(jobs) && jobs.map((job) => (
-                                            <tr key={job.id} onClick={() => {navigate('/job/'+job.id)}}>
-                                                <td>
-                                                    <h3>{job.company}</h3>
-                                                    <p>{job.city}</p>
-                                                </td>
-                                                <td>
-                                                    <h3>{job.salaryFrom}-{job.salaryTo} Ft.</h3>
-                                                    <p>{job.type === "full-time" ? "Teljes állás" : (job.type === "part-time" ? "Részmunkaidő" : "Gyakornoki")}</p>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                        </tbody>
-                                    </Table>
-                                </Row>
-                            </Container>
+            {isLoading === true ? <>
+                <LoaderAnimation/>
+            </> : (isError === true ? <>
+                    <ErrorCard onClick={() => {
+                        navigate(0)
+                    }}/>
+                </> : <>
+                    <Container style={{
+                        border: "#f8c124 1px solid",
+                        marginBottom: "20px",
+                        borderRadius: "10px",
+                        boxShadow: "#ddac25 0 0 10px"
+                    }}>
+                        <Row>
+                            <Table style={{marginTop: "20px"}} hover>
+                                <thead>
+                                <tr>
+                                    <th>ÁLLÁS</th>
+                                    <th>BÉREZÉS</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {Array.isArray(jobs) && jobs.map((job) => (
+                                    <tr key={job.id} onClick={() => {
+                                        navigate('/job/' + job.id)
+                                    }}>
+                                        <td>
+                                            <h3>{job.company}</h3>
+                                            <p>{job.city}</p>
+                                        </td>
+                                        <td>
+                                            <h3>{job.salaryFrom}-{job.salaryTo} Ft.</h3>
+                                            <p>{job.type === "full-time" ? "Teljes állás" : (job.type === "part-time" ? "Részmunkaidő" : "Gyakornoki")}</p>
+                                        </td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </Table>
+                        </Row>
+                    </Container>
 
-                        </>
-                    )}
+                </>
+            )}
         </>
     )
 }

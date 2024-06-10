@@ -2,7 +2,7 @@ import {Button, Modal} from "react-bootstrap";
 import PropTypes from "prop-types";
 
 const ErrorModal = (props) => {
-    const { error, onClose } = props;
+    const {error, onClose} = props;
     const showError = Boolean(error);
     const status = typeof error === 'object' ? JSON.stringify(error) : error;
     let errorMessage = '';
@@ -30,7 +30,7 @@ const ErrorModal = (props) => {
 }
 
 ErrorModal.propTypes = {
-error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     onClose: PropTypes.func.isRequired,
 };
 

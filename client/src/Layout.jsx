@@ -7,10 +7,10 @@ import ApplicantModal from "./components/modals/ApplicantModal.jsx";
 export const Layout = () => {
     return (
         <Container>
-            <SuccessModal />
-            <ApplicantModal />
+            <SuccessModal/>
+            <ApplicantModal/>
             <NavBar/>
-            <Outlet />
+            <Outlet/>
         </Container>
     );
 };

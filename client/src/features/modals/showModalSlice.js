@@ -23,6 +23,4 @@ const showModalSlice = createSlice({
 });
 
 export const {show, hide, setSuccessMessage, getSuccessMessage} = showModalSlice.actions;
-export const selectShowModal = (state) => state.showModal.show;
 export const showModalReducer = showModalSlice.reducer;
-export default showModalSlice;

@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {Modal, Button} from "react-bootstrap";
+import {Button, Modal} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {hideModifyExperiences} from "../../features/modals/showModifyExperiencesModalSlice.js";
 import ModifyExperience from "../experiences/ModifyExperience.jsx";
@@ -33,18 +33,22 @@ const ModifyExperiencesModal = (props) => {
     }
 
     return (
-        <Modal size="xl" scrollable centered show={show} onHide={() => {dispatch(hideModifyExperiences())}}>
+        <Modal size="xl" scrollable centered show={show} onHide={() => {
+            dispatch(hideModifyExperiences())
+        }}>
             <Modal.Header closeButton>
                 <Modal.Title>Tapasztalatok szerkesztése</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {Array.isArray(experiences) && experiences.map((exp, index) => (
-                    <ModifyExperience key={index} exp={exp} onDelete={handleDelete} onMutation={props.onMutation} />
+                    <ModifyExperience key={index} exp={exp} onDelete={handleDelete} onMutation={props.onMutation}/>
                 ))}
-                <AddExperienceToRegistered onMutation={props.onMutation} onAdd={handleAdd} />
+                <AddExperienceToRegistered onMutation={props.onMutation} onAdd={handleAdd}/>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="custom_secondary" onClick={() => {dispatch(hideModifyExperiences())}}>
+                <Button variant="custom_secondary" onClick={() => {
+                    dispatch(hideModifyExperiences())
+                }}>
                     Bezárás
                 </Button>
             </Modal.Footer>

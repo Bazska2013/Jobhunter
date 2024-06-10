@@ -9,10 +9,7 @@ import {Formik} from "formik";
 import ErrorModal from "../components/modals/ErrorModal.jsx";
 import {setSuccessMessage, show} from "../features/modals/showModalSlice.js";
 import NewExperiencesModal from "../components/modals/NewExperiencesModal.jsx";
-import {
-    setExperienceData,
-    showNewExperiences
-} from "../features/modals/showNewExperiencesModalSlice.js";
+import {setExperienceData, showNewExperiences} from "../features/modals/showNewExperiencesModalSlice.js";
 import {useAddExperiencesMutation} from "../features/jobs/experiencesApiSlice.js";
 
 const Register = () => {
@@ -81,9 +78,14 @@ const Register = () => {
 
     return (
         <>
-            <NewExperiencesModal />
-            <ErrorModal error={errors} onClose={() => setErrors('')} />
-            <Container style={{border: "#f8c124 1px solid", marginBottom: "20px", borderRadius: "10px", boxShadow: "#ddac25 0 0 10px"}}>
+            <NewExperiencesModal/>
+            <ErrorModal error={errors} onClose={() => setErrors('')}/>
+            <Container style={{
+                border: "#f8c124 1px solid",
+                marginBottom: "20px",
+                borderRadius: "10px",
+                boxShadow: "#ddac25 0 0 10px"
+            }}>
                 <Formik
                     validationSchema={schema}
                     onSubmit={values => {
@@ -139,10 +141,12 @@ const Register = () => {
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group style={{marginTop: "10px"}} className="mb-3" controlId="user-type">
-                                <Form.Check type="radio" label="Munkavállaló vagyok" name="user-type" id="jobseeker" onClick={() => setUserType(false)} defaultChecked={true} />
-                                <Form.Check type="radio" label="Munkáltató vagyok" name="user-type" id="company" onClick={() => setUserType(true)} />
+                                <Form.Check type="radio" label="Munkavállaló vagyok" name="user-type" id="jobseeker"
+                                            onClick={() => setUserType(false)} defaultChecked={true}/>
+                                <Form.Check type="radio" label="Munkáltató vagyok" name="user-type" id="company"
+                                            onClick={() => setUserType(true)}/>
                             </Form.Group>
-                            <Form.Group style={{marginTop: "10px"}} className="mb-3" controlId="name" >
+                            <Form.Group style={{marginTop: "10px"}} className="mb-3" controlId="name">
                                 {userType ?
                                     <>
                                         <Form.Label>Cég neve</Form.Label>
@@ -178,7 +182,7 @@ const Register = () => {
                                     onClick={() => dispatch(showNewExperiences())}
                                 >Tapasztalatok hozzáadása</Button>
                             </>}
-                            <Button  variant="custom_primary" type="submit">
+                            <Button variant="custom_primary" type="submit">
                                 Regisztráció
                             </Button>
                         </Form>

@@ -9,10 +9,13 @@ const NoMatch = () => {
     return (
         <div>
             <Row>
-                <InlineSvg style={{width: '50%', marginLeft: 'auto', marginRight: 'auto', display: 'block'}} src={NotFoundImg} />
+                <InlineSvg style={{width: '50%', marginLeft: 'auto', marginRight: 'auto', display: 'block'}}
+                           src={NotFoundImg}/>
             </Row>
             <Row>
-                <Button variant="outline-secondary" onClick={() => {navigate('/', {replace: 'true'})}}>Visszatérés a főoldalra</Button>
+                <Button variant="outline-secondary" onClick={() => {
+                    navigate('/', {replace: 'true'})
+                }}>Visszatérés a főoldalra</Button>
             </Row>
         </div>
     );
